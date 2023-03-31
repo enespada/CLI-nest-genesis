@@ -1,0 +1,39 @@
+{
+  "name": "cli-one-kenobi",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "kenobi": "./src/cli/cli.js"
+  },
+  "main": "cli.js",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "start": "node dist/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laviida/CLI-One-Kenobi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/laviida/CLI-One-Kenobi.git#readme",
+  "devDependencies": {
+    "@types/figlet": "^1.5.5",
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^18.15.7",
+    "@types/shelljs": "^0.8.11",
+    "rimraf": "^4.4.1",
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "boxen": "^5.1.2",
+    "chalk": "^4.1.2",
+    "commander": "^10.0.0",
+    "figlet": "^1.5.2",
+    "inquirer": "^8.0.0",
+    "ora": "^5.4.1",
+    "shelljs": "^0.8.5"
+  }
+}

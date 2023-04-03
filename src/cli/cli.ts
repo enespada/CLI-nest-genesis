@@ -2,44 +2,28 @@
 import * as shell from "shelljs";
 import { Command } from "commander";
 import { showHeader } from "./header/header";
-import ora from "ora";
-import {
-  commitlint,
-  hooks,
-  install,
-  prepare,
-  runPrepare,
-} from "./commands/commands";
+import { runHuskyCommand } from "./commands/husky/main";
+import { version, description } from "../../package.json";
+import { runBackendCommand } from "./commands/backend/main";
 
 showHeader();
 
-const program = new Command();
+const kenobi = new Command("kenobi");
 shell.config.silent = true;
-const spinner = ora();
 
-program
-  .command("husky <path>")
+kenobi.description(description).version(version);
+
+kenobi
+  .command("husky")
   .description("Initialize husky")
-  .action((path: string) => {
-    spinner.start("Instalando dependencias...");
+  .argument("<path>", "Defines the path where to install husky")
+  .action(runHuskyCommand);
 
-    install(path).once("close", () => {
-      spinner.succeed();
-      spinner.start("Añadiendo configuración commitlint...");
-      commitlint().once("close", () => {
-        spinner.succeed();
-        spinner.start("Editando package.json...");
-        prepare().once("close", () => {
-          spinner.succeed();
-          spinner.start("Creando los hooks de husky...");
-          runPrepare().once("close", () => {
-            spinner.succeed();
-            hooks(path).then(() =>
-              console.log("Hooks instalados correctamente!")
-            );
-          });
-        });
-      });
-    });
-  });
-program.parse(process.argv);
+kenobi
+  .command("backend")
+  .description("Creates a resource for specified backend path")
+  .argument("<path>", "Defines the path where to install the resource")
+  .argument("<resource>", "Defines the name of the resource")
+  .action(runBackendCommand);
+
+kenobi.parse(process.argv);

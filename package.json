@@ -5,7 +5,7 @@
   "bin": {
     "kenobi": "./src/cli/cli.js"
   },
-  "main": "cli.js",
+  "main": "./src/cli/cli.js",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",

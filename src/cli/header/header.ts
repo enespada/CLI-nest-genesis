@@ -10,7 +10,7 @@ const options: any = {
   whitespaceBreak: true,
 };
 
-const cliName = chalk.yellow(figlet.textSync("CLI-One Kenobi", options));
+const cliName = chalk.yellow(figlet.textSync("Cli One \nKenobi", options));
 const poweredBy = chalk.gray("Powered by: Sergi");
 
 const header = boxen(`${cliName}\n\n${poweredBy}`, {

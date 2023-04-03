@@ -1,7 +1,7 @@
 import * as shell from "shelljs";
 import * as fs from "fs";
-import { commitMsg } from "../husky/commit-msg";
-import { postCommit } from "../husky/post-commit";
+import { commitMsg } from "../../templates/husky/commit-msg";
+import { postCommit } from "../../templates/husky/post-commit";
 
 export const install = (path: string) => {
   return shell

@@ -4,7 +4,8 @@ import { Command } from "commander";
 import { showHeader } from "./header/header";
 import { runHuskyCommand } from "./commands/husky/main";
 import { version, description } from "../../package.json";
-import { runBackendCommand } from "./commands/backend/main";
+import { runResourceCommand } from "./commands/resource/main";
+import { runSkeletonCommand } from "./commands/skeleton/main";
 
 showHeader();
 
@@ -20,10 +21,18 @@ kenobi
   .action(runHuskyCommand);
 
 kenobi
-  .command("backend")
+  .command("resource")
   .description("Creates a resource for specified backend path")
-  .argument("<path>", "Defines the path where to install the resource")
+  .argument("<path>", "Defines the root path where to install the resource")
   .argument("<resource>", "Defines the name of the resource")
-  .action(runBackendCommand);
+  .action(runResourceCommand);
+
+kenobi
+  .command("skeleton")
+  .description(
+    "A skeleton/boilerplate/starter project for quickly building RESTful APIs using NestsJS"
+  )
+  .argument("<path>", "Defines the path where to build the skeleton")
+  .action(runSkeletonCommand);
 
 kenobi.parse(process.argv);

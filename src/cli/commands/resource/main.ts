@@ -11,7 +11,7 @@ import { application } from "../../templates/backend/application";
 import { domain } from "../../templates/backend/domain";
 
 const spinner = ora();
-export const runBackendCommand = (path: string, resource: string) => {
+export const runResourceCommand = (path: string, resource: string) => {
   spinner.start("Comprobando arquitectura...");
   isProjectStructureValid(path).then((valid: boolean) => {
     if (!valid)

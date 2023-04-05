@@ -9,8 +9,6 @@ const spinner = ora();
 export const runSkeletonCommand = (path: string) => {
   spinner.start("Copiando arquitectura...");
 
-  console.log("__dirname", __dirname);
-
   fs.copyFile(
     join(
       __dirname,

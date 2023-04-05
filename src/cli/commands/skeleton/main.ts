@@ -3,19 +3,21 @@ import * as fs from "fs";
 import { Extract } from "unzipper";
 import { projectArchitecture } from "../../templates/skeleton/project-architecture";
 import chalk from "chalk";
-import * as shell from "shelljs";
+import { join } from "path";
 
 const spinner = ora();
 export const runSkeletonCommand = (path: string) => {
   spinner.start("Copiando arquitectura...");
 
-  // return shell.exec(
-  //   `cp ./src/cli/templates/skeleton/architecture/architecture.zip ${path}/architecture.zip`,
-  //   { async: true }
-  // );
+  console.log("__dirname", __dirname);
 
   fs.copyFile(
-    "./src/cli/templates/skeleton/architecture/architecture.zip",
+    join(
+      __dirname,
+      "..",
+      "..",
+      "templates/skeleton/architecture/architecture.zip"
+    ),
     `${path}/architecture.zip`,
     (err) => {
       if (err) return spinner.fail(`Error inesperado:\n${err.message}`);

@@ -29,7 +29,7 @@ export class [entity]DomainService {
   }
 
   paginate(pageOptionsDto: PageOptionsDto) {
-    const queryBuilder = this.userRepository.createQueryBuilder('user');
+    const queryBuilder = this.[filename]Repository.createQueryBuilder('[alias]');
 
     queryBuilder
       .orderBy('user.createdAt', pageOptionsDto.order)

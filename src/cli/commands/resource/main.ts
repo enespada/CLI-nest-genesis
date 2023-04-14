@@ -1,14 +1,14 @@
 import ora from "ora";
 import { isProjectStructureValid } from "./commands";
-import { projectArchitecture } from "../../templates/backend/project-architecture";
+import { projectArchitecture } from "../../templates/resource/project-architecture";
 import * as fs from "fs";
 import { join } from "path";
-import { constants } from "../../templates/backend/constants";
-import { entity } from "../../templates/backend/entity";
-import { createDto, updateDto } from "../../templates/backend/dtos";
-import { controller } from "../../templates/backend/controller";
-import { application } from "../../templates/backend/application";
-import { domain } from "../../templates/backend/domain";
+import { constants } from "../../templates/resource/constants";
+import { entity } from "../../templates/resource/entity";
+import { createDto, updateDto } from "../../templates/resource/dtos";
+import { controller } from "../../templates/resource/controller";
+import { application } from "../../templates/resource/application";
+import { domain } from "../../templates/resource/domain";
 
 const spinner = ora();
 export const runResourceCommand = (path: string, resource: string) => {
@@ -89,7 +89,8 @@ export const runResourceCommand = (path: string, resource: string) => {
     // Domain File
     const domainData = domain
       .replace(/\[entity\]/g, entityName)
-      .replace(/\[filename\]/g, plural);
+      .replace(/\[filename\]/g, plural)
+      .replace(/\[alias\]/g, entityName.toLowerCase());
     const domainPathData = {
       path: join(srcPath, "domain", plural, `${plural}.domain.ts`),
       data: domainData,

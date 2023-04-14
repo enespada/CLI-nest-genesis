@@ -33,7 +33,7 @@ export class [entity]Service {
   }
 
   paginate(pageOptionsDto: PageOptionsDto) {
-    return this.usersDomainService.paginate(pageOptionsDto).pipe(
+    return this.[filename]DomainService.paginate(pageOptionsDto).pipe(
       map(({ itemCount, entities }) => {
         const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
         return new PageDto(entities, pageMetaDto);

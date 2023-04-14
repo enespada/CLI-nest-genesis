@@ -5,8 +5,9 @@ import { EntityQuery } from '@core/database/dto/entity-query.dto';
 import { ErrorDTO } from '@core/response/dto/error.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { catchError, from, map } from 'rxjs';
+import { catchError, from, map, forkJoin } from 'rxjs';
 import { EntityNotFoundError, Repository } from 'typeorm';
+import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
 
 @Injectable()
 export class [entity]DomainService {
@@ -25,6 +26,24 @@ export class [entity]DomainService {
 
   remove(id: number) {
     return from(this.[filename]Repository.delete({ id }));
+  }
+
+  paginate(pageOptionsDto: PageOptionsDto) {
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+
+    queryBuilder
+      .orderBy('user.createdAt', pageOptionsDto.order)
+      .skip(pageOptionsDto.skip)
+      .take(pageOptionsDto.take);
+
+    return forkJoin([
+      queryBuilder.getCount(),
+      queryBuilder.getRawAndEntities(),
+    ]).pipe(
+      map(([itemCount, { entities }]) => {
+        return { itemCount, entities };
+      }),
+    );
   }
 
   find(options: EntityQuery<[entity]>) {

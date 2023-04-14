@@ -4,6 +4,10 @@ import { [entity] } from '@controller/[filename]/entities/[filename].entity';
 import { EntityQuery } from '@core/database/dto/entity-query.dto';
 import { [entity]DomainService } from '@domain/[filename]/[filename].domain';
 import { Injectable } from '@nestjs/common';
+import { map } from 'rxjs';
+import { PageDto } from '@core/database/dto/page.dto';
+import { PageMetaDto } from '@core/database/dto/pagination-meta.dto';
+import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
 
 @Injectable()
 export class [entity]Service {
@@ -26,6 +30,15 @@ export class [entity]Service {
 
   find(options?: EntityQuery<[entity]>) {
     return this.[filename]DomainService.find(options ?? {});
+  }
+
+  paginate(pageOptionsDto: PageOptionsDto) {
+    return this.usersDomainService.paginate(pageOptionsDto).pipe(
+      map(({ itemCount, entities }) => {
+        const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+        return new PageDto(entities, pageMetaDto);
+      }),
+    );
   }
 }
 `;

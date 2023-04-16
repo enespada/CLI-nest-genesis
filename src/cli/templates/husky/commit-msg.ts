@@ -2,9 +2,9 @@ export const commitMsg = `#!/bin/bash
 . "$(dirname "$0")/_/husky.sh"
 
 echo $1
-npx commitlint --edit $1
+npx commitlint --edit
 
-msg=\`cat $1\`
+msg=\`cat "$1"\`
 version=""
 
 case $msg in

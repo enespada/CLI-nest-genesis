@@ -7,7 +7,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { catchError, from, map, forkJoin } from 'rxjs';
 import { EntityNotFoundError, Repository } from 'typeorm';
-import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
+import { [entity]PageOptionsDto } from '@core/database/dto/pagination-options.dto';
 
 @Injectable()
 export class [entity]DomainService {
@@ -28,13 +28,13 @@ export class [entity]DomainService {
     return from(this.[filename]Repository.delete({ id }));
   }
 
-  paginate(pageOptionsDto: PageOptionsDto) {
+  paginate(pageOptionsDto: [entity]PageOptionsDto) {
     const queryBuilder = this.[filename]Repository.createQueryBuilder('[alias]');
 
     queryBuilder
-      .orderBy('user.createdAt', pageOptionsDto.order)
-      .skip(pageOptionsDto.skip)
-      .take(pageOptionsDto.take);
+    .orderBy(\`[alias].\${pageOptionsDto.orderBy}\`, pageOptionsDto.order)
+    .skip(pageOptionsDto.skip)
+    .take(pageOptionsDto.take);
 
     return forkJoin([
       queryBuilder.getCount(),

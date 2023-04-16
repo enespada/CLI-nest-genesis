@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs';
 import { PageDto } from '@core/database/dto/page.dto';
 import { PageMetaDto } from '@core/database/dto/pagination-meta.dto';
-import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
+import { [entity]PageOptionsDto } from '@core/database/dto/pagination-options.dto';
 
 @Injectable()
 export class [entity]Service {
@@ -32,7 +32,7 @@ export class [entity]Service {
     return this.[filename]DomainService.find(options ?? {});
   }
 
-  paginate(pageOptionsDto: PageOptionsDto) {
+  paginate(pageOptionsDto: [entity]PageOptionsDto) {
     return this.[filename]DomainService.paginate(pageOptionsDto).pipe(
       map(({ itemCount, entities }) => {
         const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });

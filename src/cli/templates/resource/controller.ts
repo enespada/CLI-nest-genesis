@@ -31,7 +31,7 @@ import {
 import { Create[entity]Dto } from './dto/create-[filename].dto';
 import { Update[entity]Dto } from './dto/update-[filename].dto';
 import { [entity] } from './entities/[filename].entity';
-import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
+import { [entity]PageOptionsDto } from '@core/database/dto/pagination-options.dto';
 
 @Controller('[filename]')
 @ApiTags('[entity]')
@@ -83,14 +83,14 @@ export class [entity]Controller {
   }
 
   @Get('paginate')
-  @ApiOperation({ summary: 'Paginate users' })
+  @ApiOperation({ summary: 'Paginate [filename]' })
   @ApiOkResponse({
-    type: Array<User>,
+    type: Array<[entity]>,
     isArray: true,
     description: 'Retrieves an array of users',
   })
-  paginate(@Query() pageOptionsDto: PageOptionsDto) {
-    return this.usersService.paginate(pageOptionsDto);
+  paginate(@Query() pageOptionsDto: [entity]PageOptionsDto) {
+    return this.[filename]Service.paginate(pageOptionsDto);
   }
 
   @Post()

@@ -13,7 +13,7 @@ export const install = (path: string) => {
 
 export const commitlint = () => {
   return shell.exec(
-    "echo \"module.exports = { extends: ['@commitlint/config-conventional'] };\" > commitlint.config.js",
+    "echo module.exports = { extends: ['@commitlint/config-conventional'] }; > commitlint.config.js",
     { async: true }
   );
 };

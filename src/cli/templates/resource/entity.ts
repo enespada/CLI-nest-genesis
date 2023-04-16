@@ -1,4 +1,6 @@
 export const entity = `import { ApiProperty } from '@nestjs/swagger';
+import { AbstractEntity } from '@core/database/entity/abstract.entity';
+
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,17 +9,13 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class [entity] {
-  @PrimaryGeneratedColumn('increment')
-  @ApiProperty()
-  id: number;
-
-  @CreateDateColumn()
-  @ApiProperty({ type: Date })
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  @ApiProperty({ type: Date })
-  updatedAt: Date;
+export class [entity] extends AbstractEntity  {
 }
+
+export enum [entity]FilterBy {
+  id = 'id',
+  createdAt = 'createdAt',
+  updatedAt = 'updatedAt',
+}
+
 `;

@@ -29,18 +29,18 @@ export class [entity]DomainService {
   }
 
   paginate(pageOptionsDto: [entity]PageOptionsDto) {
-    const queryBuilder = this.[filename]Repository.createQueryBuilder('[alias]');
-
-    queryBuilder
-    .orderBy(\`[alias].\${pageOptionsDto.orderBy}\`, pageOptionsDto.order)
-    .skip(pageOptionsDto.skip)
-    .take(pageOptionsDto.take);
-
     return forkJoin([
-      queryBuilder.getCount(),
-      queryBuilder.getRawAndEntities(),
+      this.[alias]Repository.count(),
+      this.[alias]Repository.find({
+        order: {
+          [pageOptionsDto.orderBy]: pageOptionsDto.order,
+        },
+        skip: pageOptionsDto.skip,
+        take: pageOptionsDto.take,
+        relations: pageOptionsDto.relations,
+      }),
     ]).pipe(
-      map(([itemCount, { entities }]) => {
+      map(([itemCount, entities]) => {
         return { itemCount, entities };
       }),
     );

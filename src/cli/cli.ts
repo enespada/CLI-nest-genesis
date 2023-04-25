@@ -16,23 +16,23 @@ kenobi.description(description).version(version);
 
 kenobi
   .command("husky")
-  .description("Initialize husky")
-  .argument("<path>", "Defines the path where to install husky")
+  .description("Inicializar husky")
+  .argument("<path>", "Define la ruta donde instalar husky")
   .action(runHuskyCommand);
 
 kenobi
   .command("resource")
-  .description("Creates a resource for specified backend path")
-  .argument("<path>", "Defines the root path where to install the resource")
-  .argument("<resource>", "Defines the name of the resource")
+  .description("Crea un recurso para la ruta de back-end especificada")
+  .argument("<path>", "Define la ruta raíz donde instalar el recurso")
+  .argument("<resource>", "Define el nombre del recurso")
   .action(runResourceCommand);
 
 kenobi
   .command("skeleton")
   .description(
-    "A skeleton/boilerplate/starter project for quickly building RESTful APIs using NestsJS"
+    "Un proyecto de esqueleto/boilerplate/iniciador para construir rápidamente API RESTful usando NestJS"
   )
-  .argument("<path>", "Defines the path where to build the skeleton")
+  .argument("<path>", "Define la ruta donde construir el esqueleto")
   .action(runSkeletonCommand);
 
 kenobi.parse(process.argv);

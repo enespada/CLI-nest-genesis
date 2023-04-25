@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs';
 import { PageDto } from '@core/database/dto/page.dto';
 import { PageMetaDto } from '@core/database/dto/pagination-meta.dto';
-import { [entity]PageOptionsDto } from '@core/database/dto/pagination-options.dto';
+import { [entity]PageOptionsDto } from '@controller/[filename]/dto/[filename]-pagination-options.dto';
 
 @Injectable()
 export class [entity]Service {

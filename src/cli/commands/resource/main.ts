@@ -5,7 +5,11 @@ import * as fs from "fs";
 import { join } from "path";
 import { constants } from "../../templates/resource/constants";
 import { entity } from "../../templates/resource/entity";
-import { createDto, updateDto } from "../../templates/resource/dtos";
+import {
+  createDto,
+  paginationDto,
+  updateDto,
+} from "../../templates/resource/dtos";
 import { controller } from "../../templates/resource/controller";
 import { application } from "../../templates/resource/application";
 import { domain } from "../../templates/resource/domain";
@@ -16,7 +20,7 @@ export const runResourceCommand = (path: string, resource: string) => {
   isProjectStructureValid(path).then((valid: boolean) => {
     if (!valid)
       return spinner.fail(
-        `Invalid project architecture\nProject architecture must be:\n${projectArchitecture}`
+        `Arquitectura del proyecto no válida\nLa arquitectura del proyecto debe ser:\n${projectArchitecture}`
       );
     spinner.succeed();
 
@@ -68,6 +72,21 @@ export const runResourceCommand = (path: string, resource: string) => {
       data: updateDtoData,
     };
 
+    // Pagination Dto File
+    const paginationDtoData = paginationDto
+      .replace(/\[entity\]/g, entityName)
+      .replace(/\[filename\]/g, plural);
+    const paginationDtoPathData = {
+      path: join(
+        srcPath,
+        "api",
+        plural,
+        "dto",
+        `${plural}-pagination-options.dto.ts`
+      ),
+      data: paginationDtoData,
+    };
+
     // Controller File
     const controllerDtoData = controller
       .replace(/\[entity\]/g, entityName)
@@ -102,11 +121,13 @@ export const runResourceCommand = (path: string, resource: string) => {
         entityPathData,
         createDtoPathData,
         updateDtoPathData,
+        paginationDtoPathData,
         controllerDtoPathData,
         applicationPathData,
         domainPathData,
       ]).then(() => {
         spinner.succeed();
+        console.log("Recursos creados correctamente!");
       });
     });
   });

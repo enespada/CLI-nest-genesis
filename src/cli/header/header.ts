@@ -11,7 +11,7 @@ const options: any = {
 };
 
 const cliName = chalk.yellow(figlet.textSync("Cli One \nKenobi", options));
-const poweredBy = chalk.gray("Powered by: Sergi");
+const poweredBy = chalk.gray("Powered by: Sergi (https://github.com/laviida)");
 
 const header = boxen(`${cliName}\n\n${poweredBy}`, {
   padding: 1,

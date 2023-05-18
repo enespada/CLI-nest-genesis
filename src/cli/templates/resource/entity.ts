@@ -12,7 +12,7 @@ import {
 export class [entity] extends AbstractEntity  {
 }
 
-export enum [entity]FilterBy {
+export enum [entity]OrderBy {
   id = 'id',
   createdAt = 'createdAt',
   updatedAt = 'updatedAt',

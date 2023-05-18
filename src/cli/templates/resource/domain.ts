@@ -35,9 +35,10 @@ export class [entity]DomainService {
         order: {
           [pageOptionsDto.orderBy]: pageOptionsDto.order,
         },
+        where: pageOptionsDto.where,
         skip: pageOptionsDto.skip,
         take: pageOptionsDto.take,
-        relations: pageOptionsDto.relations,
+        relations: pageOptionsDto.relations as unknown as Array<string>,
       }),
     ]).pipe(
       map(([itemCount, entities]) => {

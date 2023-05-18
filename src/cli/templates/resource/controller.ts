@@ -21,12 +21,15 @@ import { JwtUserGuard } from '@core/middlewares/jwt/user/jwt-user.guard';
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
+  getSchemaPath,
 } from '@nestjs/swagger';
 import { Create[entity]Dto } from './dto/create-[filename].dto';
 import { Update[entity]Dto } from './dto/update-[filename].dto';
@@ -84,6 +87,17 @@ export class [entity]Controller {
 
   @Get('paginate')
   @ApiOperation({ summary: 'Paginate [filename]' })
+  @ApiExtraModels([entity])
+  @ApiQuery({
+    required: false,
+    name: 'where',
+    style: 'deepObject',
+    explode: true,
+    type: 'object',
+    schema: {
+      $ref: getSchemaPath([entity]),
+    },
+  })
   @ApiOkResponse({
     type: Array<[entity]>,
     isArray: true,

@@ -12,21 +12,23 @@ export class Update[entity]Dto {
 `;
 
 export const paginationDto = `import {
-  [entity]FilterBy,
+  [entity],
+  [entity]OrderBy,
   [entity]Relations,
 } from '@controller/[filename]/entities/[filename].entity';
 import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsOptional } from 'class-validator';
 
 export class [entity]PageOptionsDto extends PageOptionsDto {
-  @ApiPropertyOptional({ enum: [entity]FilterBy, default: [entity]FilterBy.id })
-  @IsEnum([entity]FilterBy)
+  @ApiProperty({ enum: [entity]OrderBy, default: [entity]OrderBy.id, required: false })
+  @IsEnum([entity]OrderBy)
   @IsOptional()
-  readonly orderBy?: [entity]FilterBy = [entity]FilterBy.id;
+  readonly orderBy?: [entity]OrderBy = [entity]OrderBy.id;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
+    required: false,
     isArray: true,
     enum: [entity]Relations,
     default: [],
@@ -35,6 +37,10 @@ export class [entity]PageOptionsDto extends PageOptionsDto {
   @IsOptional()
   @Transform((data) => (Array.isArray(data.value) ? data.value : [data.value]))
   readonly relations?: Array<[entity]Relations> = [];
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  where?: Partial<[entity]>;
 }
 
 `;

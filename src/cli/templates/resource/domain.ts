@@ -41,8 +41,8 @@ export class [entity]DomainService {
         relations: pageOptionsDto.relations as unknown as Array<string>,
       }),
     ]).pipe(
-      map(([itemCount, entities]) => {
-        return { itemCount, entities };
+      map(([totalItems, entities]) => {
+        return { totalItems, entities };
       }),
     );
   }
@@ -54,18 +54,16 @@ export class [entity]DomainService {
         take: options.limit,
       }),
     ).pipe(
-      map(([filename]s: Array<[entity]>) => {
-        if (options.orFail && [filename]s.length === 0)
+      map(([filename]: Array<[entity]>) => {
+        if (options.orFail && [filename].length === 0)
           throw new EntityNotFoundError(
             [entity],
-            \`\${
-              [entity].name
-            } entities not found. Filtered by: \${Object.keys(
+            \`\${ [entity].name } entities not found. Filtered by: \${Object.keys(
               options.where ?? [],
             ).map((k) => \`\${k.toUpperCase()} (\${k}: \${options.where[k]}), \`)}\`,
           );
-        if ([filename]s.length === 0 && options.limit === 1) return null;
-        return options.limit === 1 ? [filename]s[0] : [filename]s;
+        if ([filename].length === 0 && options.limit === 1) return null;
+        return options.limit === 1 ? [filename][0] : [filename];
       }),
       catchError((e: HttpException) => {
         if (e instanceof EntityNotFoundError)

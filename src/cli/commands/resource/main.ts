@@ -15,7 +15,11 @@ import { application } from "../../templates/resource/application";
 import { domain } from "../../templates/resource/domain";
 
 const spinner = ora();
-export const runResourceCommand = (path: string, resource: string) => {
+export const runResourceCommand = (
+  path: string,
+  resource: string,
+  plural: string
+) => {
   spinner.start("Comprobando arquitectura...");
   isProjectStructureValid(path).then((valid: boolean) => {
     if (!valid)
@@ -26,11 +30,7 @@ export const runResourceCommand = (path: string, resource: string) => {
 
     spinner.start("Creando recursos...");
 
-    const plural = resource.match(/s$/) ? resource + "es" : resource + "s";
-    const singular = plural.match(/es$/)
-      ? plural.slice(0, -2)
-      : plural.slice(0, -1);
-    const entityName = singular.charAt(0).toUpperCase() + singular.slice(1);
+    const entityName = resource.charAt(0).toUpperCase() + resource.slice(1);
 
     const srcPath = `${path}/src/app`;
     const folders = [

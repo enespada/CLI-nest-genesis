@@ -108,8 +108,7 @@ export const runResourceCommand = (
     // Domain File
     const domainData = domain
       .replace(/\[entity\]/g, entityName)
-      .replace(/\[filename\]/g, plural)
-      .replace(/\[alias\]/g, entityName.toLowerCase());
+      .replace(/\[filename\]/g, plural);
     const domainPathData = {
       path: join(srcPath, "domain", plural, `${plural}.domain.ts`),
       data: domainData,

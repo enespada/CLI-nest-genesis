@@ -7,7 +7,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { catchError, from, map, forkJoin } from 'rxjs';
 import { EntityNotFoundError, Repository } from 'typeorm';
-import { [entity]PageOptionsDto } from '@core/database/dto/pagination-options.dto';
+import { [entity]PageOptionsDto } from '@controller/[filename]/dto/[filename]-pagination-options.dto';
 
 @Injectable()
 export class [entity]DomainService {
@@ -30,8 +30,8 @@ export class [entity]DomainService {
 
   paginate(pageOptionsDto: [entity]PageOptionsDto) {
     return forkJoin([
-      this.[alias]Repository.count(),
-      this.[alias]Repository.find({
+      this.[filename]Repository.count(),
+      this.[filename]Repository.find({
         order: {
           [pageOptionsDto.orderBy]: pageOptionsDto.order,
         },

@@ -34,7 +34,7 @@ import {
 import { Create[entity]Dto } from './dto/create-[filename].dto';
 import { Update[entity]Dto } from './dto/update-[filename].dto';
 import { [entity] } from './entities/[filename].entity';
-import { [entity]PageOptionsDto } from '@core/database/dto/pagination-options.dto';
+import { [entity]PageOptionsDto } from './dto/[filename]-pagination-options.dto';
 
 @Controller('[filename]')
 @ApiTags('[entity]')

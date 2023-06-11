@@ -34,8 +34,8 @@ export class [entity]Service {
 
   paginate(pageOptionsDto: [entity]PageOptionsDto) {
     return this.[filename]DomainService.paginate(pageOptionsDto).pipe(
-      map(({ itemCount, entities }) => {
-        const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+      map(({ totalItems, entities }) => {
+        const pageMetaDto = new PageMetaDto({ totalItems, pageOptionsDto });
         return new PageDto(entities, pageMetaDto);
       }),
     );

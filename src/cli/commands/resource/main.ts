@@ -13,6 +13,7 @@ import {
 import { controller } from "../../templates/resource/controller";
 import { application } from "../../templates/resource/application";
 import { domain } from "../../templates/resource/domain";
+import { module } from "../../templates/resource/module";
 
 const spinner = ora();
 export const runResourceCommand = (
@@ -114,6 +115,15 @@ export const runResourceCommand = (
       data: domainData,
     };
 
+    // Module File
+    const moduleData = module
+      .replace(/\[entity\]/g, entityName)
+      .replace(/\[filename\]/g, plural);
+    const modulePathData = {
+      path: join(srcPath, "api", plural, `${plural}.module.ts`),
+      data: moduleData,
+    };
+
     mkdir(folders).then(() => {
       write([
         constantsPathData,
@@ -124,6 +134,7 @@ export const runResourceCommand = (
         controllerDtoPathData,
         applicationPathData,
         domainPathData,
+        modulePathData,
       ]).then(() => {
         spinner.succeed();
         console.log("Recursos creados correctamente!");

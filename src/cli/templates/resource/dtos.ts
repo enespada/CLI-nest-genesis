@@ -1,9 +1,9 @@
-export const createDto = `export class Create[entity]Dto {}`;
+export const createDto = (capitalized: string) => `export class Create${capitalized}Dto {}`;
 
-export const updateDto = `import { ApiProperty } from '@nestjs/swagger';
+export const updateDto = (capitalized: string) => `import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export class Update[entity]Dto {
+export class Update${capitalized}Dto {
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
@@ -11,36 +11,35 @@ export class Update[entity]Dto {
 }
 `;
 
-export const paginationDto = `import {
-  [entity],
-  [entity]OrderBy,
-  [entity]Relations,
-} from '@controller/[filename]/entities/[filename].entity';
+export const paginationDto = (capitalized: string, lowercased: string) => `import {
+  ${capitalized},
+  ${capitalized}OrderBy,
+  ${capitalized}Relations,
+} from '@controller/${lowercased}/entities/${lowercased}.entity';
 import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsOptional } from 'class-validator';
 
-export class [entity]PageOptionsDto extends PageOptionsDto {
-  @ApiProperty({ enum: [entity]OrderBy, default: [entity]OrderBy.id, required: false })
-  @IsEnum([entity]OrderBy)
+export class ${capitalized}PageOptionsDto extends PageOptionsDto {
+  @ApiProperty({ enum: ${capitalized}OrderBy, default: ${capitalized}OrderBy.id, required: false })
+  @IsEnum(${capitalized}OrderBy)
   @IsOptional()
-  readonly orderBy?: [entity]OrderBy = [entity]OrderBy.id;
+  readonly orderBy?: ${capitalized}OrderBy = ${capitalized}OrderBy.id;
 
   @ApiProperty({
     required: false,
     isArray: true,
-    enum: [entity]Relations,
+    enum: ${capitalized}Relations,
     default: [],
   })
-  @IsEnum([entity]Relations, { each: true })
+  @IsEnum(${capitalized}Relations, { each: true })
   @IsOptional()
   @Transform((data) => (Array.isArray(data.value) ? data.value : [data.value]))
-  readonly relations?: Array<[entity]Relations> = [];
+  readonly relations?: Array<${capitalized}Relations> = [];
 
   @ApiProperty({ required: false })
   @IsOptional()
-  where?: Partial<[entity]>;
+  where?: Partial<${capitalized}>;
 }
-
 `;

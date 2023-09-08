@@ -5,22 +5,14 @@ import * as fs from "fs";
 import { join } from "path";
 import { constants } from "../../templates/resource/constants";
 import { entity } from "../../templates/resource/entity";
-import {
-  createDto,
-  paginationDto,
-  updateDto,
-} from "../../templates/resource/dtos";
+import { createDto, paginationDto, updateDto } from "../../templates/resource/dtos";
 import { controller } from "../../templates/resource/controller";
 import { application } from "../../templates/resource/application";
 import { domain } from "../../templates/resource/domain";
-import { module } from "../../templates/resource/module";
+import { appModule } from "../../templates/resource/module";
 
 const spinner = ora();
-export const runResourceCommand = (
-  path: string,
-  resource: string,
-  plural: string
-) => {
+export const runResourceCommand = (path: string, resource: string) => {
   spinner.start("Comprobando arquitectura...");
   isProjectStructureValid(path).then((valid: boolean) => {
     if (!valid)
@@ -31,111 +23,62 @@ export const runResourceCommand = (
 
     spinner.start("Creando recursos...");
 
-    const entityName = resource.charAt(0).toUpperCase() + resource.slice(1);
+    const entityName = toCamelCase(resource, true);
+    const variable = toCamelCase(resource);
+    const filename = resource.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 
     const srcPath = `${path}/src/app`;
-    const folders = [
-      join(srcPath, "api", plural),
-      join(srcPath, "api", plural, "constants"),
-      join(srcPath, "api", plural, "dto"),
-      join(srcPath, "api", plural, "entities"),
-      join(srcPath, "application", plural),
-      join(srcPath, "domain", plural),
-    ];
-
-    // Constants File
-    const constantsData = constants
-      .replace(/\[entity\]/g, entityName)
-      .replace(/\[filename\]/g, plural);
-    const constantsPathData = {
-      path: join(srcPath, "api", plural, "constants", `${plural}.constants.ts`),
-      data: constantsData,
+    const folders = {
+      module: {
+        path: join(join(srcPath, "api", filename)),
+        filename: `${filename}.module.ts`,
+        data: appModule(entityName, filename),
+      },
+      controller: {
+        path: join(join(srcPath, "api", filename)),
+        filename: `${filename}.controller.ts`,
+        data: controller(entityName, filename, variable),
+      },
+      application: {
+        path: join(join(srcPath, "application", filename)),
+        filename: `${filename}.service.ts`,
+        data: application(entityName, filename, variable),
+      },
+      domain: {
+        path: join(join(srcPath, "domain", filename)),
+        filename: `${filename}.domain.ts`,
+        data: domain(entityName, filename, variable),
+      },
+      constants: {
+        path: join(join(srcPath, "api", filename, "constants")),
+        filename: `${filename}.constants.ts`,
+        data: constants(entityName, filename),
+      },
+      createDto: {
+        path: join(join(srcPath, "api", filename, "dto")),
+        filename: `create-${filename}.dto.ts`,
+        data: createDto(entityName),
+      },
+      updateDto: {
+        path: join(join(srcPath, "api", filename, "dto")),
+        filename: `update-${filename}.dto.ts`,
+        data: updateDto(entityName),
+      },
+      paginationDto: {
+        path: join(join(srcPath, "api", filename, "dto")),
+        filename: `${filename}-pagination-options.dto.ts`,
+        data: paginationDto(entityName, filename),
+      },
+      entities: {
+        path: join(join(srcPath, "api", filename, "entities")),
+        filename: `${filename}.entity.ts`,
+        data: entity(entityName),
+      },
     };
+    const values = Object.values(folders);
 
-    // Entity File
-    const entityData = entity.replace(/\[entity\]/g, entityName);
-    const entityPathData = {
-      path: join(srcPath, "api", plural, "entities", `${plural}.entity.ts`),
-      data: entityData,
-    };
-
-    // Create Dto File
-    const createDtoData = createDto.replace(/\[entity\]/g, entityName);
-    const createDtoPathData = {
-      path: join(srcPath, "api", plural, "dto", `create-${plural}.dto.ts`),
-      data: createDtoData,
-    };
-
-    // Update Dto File
-    const updateDtoData = updateDto.replace(/\[entity\]/g, entityName);
-    const updateDtoPathData = {
-      path: join(srcPath, "api", plural, "dto", `update-${plural}.dto.ts`),
-      data: updateDtoData,
-    };
-
-    // Pagination Dto File
-    const paginationDtoData = paginationDto
-      .replace(/\[entity\]/g, entityName)
-      .replace(/\[filename\]/g, plural);
-    const paginationDtoPathData = {
-      path: join(
-        srcPath,
-        "api",
-        plural,
-        "dto",
-        `${plural}-pagination-options.dto.ts`
-      ),
-      data: paginationDtoData,
-    };
-
-    // Controller File
-    const controllerDtoData = controller
-      .replace(/\[entity\]/g, entityName)
-      .replace(/\[filename\]/g, plural);
-    const controllerDtoPathData = {
-      path: join(srcPath, "api", plural, `${plural}.controller.ts`),
-      data: controllerDtoData,
-    };
-
-    // Application File
-    const applicationData = application
-      .replace(/\[entity\]/g, entityName)
-      .replace(/\[filename\]/g, plural);
-    const applicationPathData = {
-      path: join(srcPath, "application", plural, `${plural}.service.ts`),
-      data: applicationData,
-    };
-
-    // Domain File
-    const domainData = domain
-      .replace(/\[entity\]/g, entityName)
-      .replace(/\[filename\]/g, plural);
-    const domainPathData = {
-      path: join(srcPath, "domain", plural, `${plural}.domain.ts`),
-      data: domainData,
-    };
-
-    // Module File
-    const moduleData = module
-      .replace(/\[entity\]/g, entityName)
-      .replace(/\[filename\]/g, plural);
-    const modulePathData = {
-      path: join(srcPath, "api", plural, `${plural}.module.ts`),
-      data: moduleData,
-    };
-
-    mkdir(folders).then(() => {
-      write([
-        constantsPathData,
-        entityPathData,
-        createDtoPathData,
-        updateDtoPathData,
-        paginationDtoPathData,
-        controllerDtoPathData,
-        applicationPathData,
-        domainPathData,
-        modulePathData,
-      ]).then(() => {
+    mkdir(values.map((f) => f.path)).then(() => {
+      write(values).then(() => {
         spinner.succeed();
         console.log("Recursos creados correctamente!");
       });
@@ -160,11 +103,19 @@ export const write = async (files: Array<any>) => {
   return Promise.all(
     files.map((f) => {
       return new Promise<void>((resolve, reject) => {
-        fs.writeFile(f.path, f.data, (err) => {
+        fs.writeFile(join(f.path, f.filename), f.data, (err) => {
           if (err) reject(err);
           resolve();
         });
       });
     })
   );
+};
+
+export const toCamelCase = (input: string, capitalize = false) => {
+  return input
+    .split(/[^a-zA-Z0-9]+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0)[capitalize ? "toUpperCase" : "toLowerCase"]() + word.slice(1))
+    .join("");
 };

@@ -1,4 +1,8 @@
-export const controller = `import { [entity]Service } from '@application/[filename]/[filename].service';
+export const controller = (
+  capitalized: string,
+  lowercased: string,
+  variable: string
+) => `import { ${capitalized}Service } from '@application/${lowercased}/${lowercased}.service';
 import { ExceptionFilter } from '@core/exceptions/global.exception';
 import { TransformInterceptor } from '@core/response/success.response';
 import {
@@ -31,63 +35,61 @@ import {
   ApiUnauthorizedResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { Create[entity]Dto } from './dto/create-[filename].dto';
-import { Update[entity]Dto } from './dto/update-[filename].dto';
-import { [entity] } from './entities/[filename].entity';
-import { [entity]PageOptionsDto } from './dto/[filename]-pagination-options.dto';
+import { Create${capitalized}Dto } from './dto/create-${lowercased}.dto';
+import { Update${capitalized}Dto } from './dto/update-${lowercased}.dto';
+import { ${capitalized} } from './entities/${lowercased}.entity';
+import { ${capitalized}PageOptionsDto } from './dto/${lowercased}-pagination-options.dto';
 
-@Controller('[filename]')
-@ApiTags('[entity]')
+@Controller('${lowercased}')
+@ApiTags('${capitalized}')
 @UseFilters(ExceptionFilter)
 @UseGuards(JwtUserGuard)
 @UseInterceptors(TransformInterceptor)
 @ApiUnauthorizedResponse({
   description: 'Bearer token must be a valid Token',
 })
-export class [entity]Controller {
-  constructor(private readonly [filename]Service: [entity]Service) {}
+export class ${capitalized}Controller {
+  constructor(private readonly ${variable}Service: ${capitalized}Service) {}
 
   @Get(':id')
   @ApiBearerAuth()
   @ApiParam({
     name: 'id',
     type: String,
-    description: 'Unique identifier of the [filename]',
+    description: 'Unique identifier of the ${lowercased}',
   })
-  @ApiOperation({ summary: 'Gets a [filename] by given id' })
+  @ApiOperation({ summary: 'Gets a ${lowercased} by given id' })
   @ApiOkResponse({
-    type: [entity],
-    description: 'Retrieves [filename] data',
+    type: ${capitalized},
+    description: 'Retrieves ${lowercased} data',
   })
   @ApiResponse({
-    description: 'There is no [filename] with the given id',
+    description: 'There is no ${lowercased} with the given id',
     status: HttpStatus.NOT_FOUND,
   })
   get(@Param('id', ParseIntPipe) id: number) {
-    return this.[filename]Service.find({
+    return this.${variable}Service.findOne({
       where: {
         id,
-      },
-      limit: 1,
-      orFail: true,
+      }
     });
   }
 
   @Get()
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Gets all [filename]' })
+  @ApiOperation({ summary: 'Gets all ${lowercased}' })
   @ApiOkResponse({
-    type: Array<[entity]>,
+    type: Array<${capitalized}>,
     isArray: true,
-    description: 'Retrieves an array of [filename]',
+    description: 'Retrieves an array of ${lowercased}',
   })
   getAll() {
-    return this.[filename]Service.find();
+    return this.${variable}Service.find();
   }
 
   @Get('paginate')
-  @ApiOperation({ summary: 'Paginate [filename]' })
-  @ApiExtraModels([entity])
+  @ApiOperation({ summary: 'Paginate ${lowercased}' })
+  @ApiExtraModels(${capitalized})
   @ApiQuery({
     required: false,
     name: 'where',
@@ -95,45 +97,45 @@ export class [entity]Controller {
     explode: true,
     type: 'object',
     schema: {
-      $ref: getSchemaPath([entity]),
+      $ref: getSchemaPath(${capitalized}),
     },
   })
   @ApiOkResponse({
-    type: Array<[entity]>,
+    type: Array<${capitalized}>,
     isArray: true,
     description: 'Retrieves an array of users',
   })
-  paginate(@Query() pageOptionsDto: [entity]PageOptionsDto) {
-    return this.[filename]Service.paginate(pageOptionsDto);
+  paginate(@Query() pageOptionsDto: ${capitalized}PageOptionsDto) {
+    return this.${variable}Service.paginate(pageOptionsDto);
   }
 
   @Post()
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Saves an [filename]' })
-  @ApiBody({ type: Create[entity]Dto })
+  @ApiOperation({ summary: 'Saves an ${lowercased}' })
+  @ApiBody({ type: Create${capitalized}Dto })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
     description: 'The request sent to the server is invalid or corrupted',
   })
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: [entity],
-    description: 'Retrieves a saved [filename]',
+    type: ${capitalized},
+    description: 'Retrieves a saved ${lowercased}',
   })
   save(
     @Body()
-    [filename]Dto: Create[entity]Dto,
+    ${variable}Dto: Create${capitalized}Dto,
   ) {
-    return this.[filename]Service.create([filename]Dto);
+    return this.${variable}Service.create(${variable}Dto);
   }
 
   @Put()
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Updates a [filename]' })
-  @ApiBody({ type: Update[entity]Dto })
+  @ApiOperation({ summary: 'Updates a ${lowercased}' })
+  @ApiBody({ type: Update${capitalized}Dto })
   @ApiOkResponse({
-    type: [entity],
-    description: 'Retrieves an updated [filename]',
+    type: ${capitalized},
+    description: 'Retrieves an updated ${lowercased}',
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -141,18 +143,18 @@ export class [entity]Controller {
   })
   update(
     @Body()
-    [filename]Dto: Update[entity]Dto,
+    ${variable}Dto: Update${capitalized}Dto,
   ) {
-    return this.[filename]Service.update([filename]Dto);
+    return this.${variable}Service.update(${variable}Dto);
   }
 
   @Delete(':id')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Deletes a [filename]' })
+  @ApiOperation({ summary: 'Deletes a ${lowercased}' })
   @ApiParam({
     name: 'id',
     type: String,
-    description: 'Unique identifier of the [filename]',
+    description: 'Unique identifier of the ${lowercased}',
   })
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
@@ -160,7 +162,7 @@ export class [entity]Controller {
     description: 'Chassis successfully deleted',
   })
   delete(@Param('id', ParseIntPipe) id: number) {
-    return this.[filename]Service.remove(id);
+    return this.${variable}Service.remove(id);
   }
 }
 `;

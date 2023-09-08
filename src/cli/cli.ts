@@ -24,15 +24,12 @@ kenobi
   .command("resource")
   .description("Crea un recurso para la ruta de back-end especificada")
   .argument("<path>", "Define la ruta raíz donde instalar el recurso")
-  .argument("<resource>", "Define el nombre del recurso")
-  .argument("<plural>", "Define el nombre del recurso en plural")
+  .argument("<resource>", "Define el nombre del recurso (usa el plural)")
   .action(runResourceCommand);
 
 kenobi
   .command("skeleton")
-  .description(
-    "Un proyecto de esqueleto/boilerplate/iniciador para construir rápidamente API RESTful usando NestJS"
-  )
+  .description("Un proyecto de esqueleto/boilerplate/iniciador para construir rápidamente API RESTful usando NestJS")
   .argument("<path>", "Define la ruta donde construir el esqueleto")
   .action(runSkeletonCommand);
 

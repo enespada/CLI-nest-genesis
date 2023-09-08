@@ -1,15 +1,14 @@
 {
   "name": "cli-one-kenobi",
-  "version": "1.5.1",
+  "version": "1.7.0",
   "description": "",
   "bin": {
-    "kenobi": "./src/cli/cli.js"
+    "kenobi": "dist/src/cli/cli.js"
   },
-  "main": "./src/cli/cli.js",
+  "main": "dist/src/cli/cli.js",
   "scripts": {
-    "prebuild": "rimraf ../CLI One Kenobi Library/src",
-    "copy-zip": "node -e \"require('fs-extra').copySync('src/cli/templates/skeleton/architecture/architecture.zip', '../CLI One Kenobi Library/src/cli/templates/skeleton/architecture/architecture.zip')\"",
-    "build": "tsc && npm run copy-zip",
+    "prebuild": "rimraf ./dist",
+    "build": "tsc",
     "_prepare": "husky install && husky add .husky/commit-msg && husky add .husky/post-commit"
   },
   "repository": {
@@ -25,7 +24,6 @@
     "@types/inquirer": "^9.0.3",
     "@types/node": "^18.15.7",
     "@types/shelljs": "^0.8.11",
-    "@types/unzipper": "^0.10.5",
     "rimraf": "^4.4.1",
     "typescript": "^5.0.2"
   },
@@ -40,7 +38,6 @@
     "husky": "^8.0.3",
     "inquirer": "^8.0.0",
     "ora": "^5.4.1",
-    "shelljs": "^0.8.5",
-    "unzipper": "^0.10.11"
+    "shelljs": "^0.8.5"
   }
 }

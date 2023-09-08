@@ -1,44 +1,43 @@
 import ora from "ora";
-import * as fs from "fs";
-import { Extract } from "unzipper";
 import { projectArchitecture } from "../../templates/skeleton/project-architecture";
 import chalk from "chalk";
-import { join } from "path";
+import { clone } from "./commands";
+import * as fs from "fs";
+import { env } from "../../templates/skeleton/env";
 
 const spinner = ora();
 export const runSkeletonCommand = (path: string) => {
-  spinner.start("Copiando arquitectura...");
+  spinner.start("Generando arquitectura...");
 
-  fs.copyFile(
-    join(
-      __dirname,
-      "..",
-      "..",
-      "templates/skeleton/architecture/architecture.zip"
-    ),
-    `${path}/architecture.zip`,
-    (err) => {
-      if (err) return spinner.fail(`Error inesperado:\n${err.message}`);
-      spinner.succeed();
-      spinner.start("Generando recursos...");
-      const readStream = fs.createReadStream(`${path}/architecture.zip`);
-      readStream
-        .pipe(Extract({ path }))
-        .on("close", () => {
-          spinner.succeed();
-          spinner.start("Limpiando...");
-          fs.rm(`${path}/architecture.zip`, () => {
-            spinner.succeed();
-            console.log(
-              `Arquitectura generada en ${chalk.bold.whiteBright(
-                path
-              )}\nLa arquitectura generada tendrá la siguiente estructura:\n${projectArchitecture}`
-            );
-          });
-        })
-        .on("error", (err) => {
-          spinner.fail(`Error inesperado:\n${err.message}`);
+  clone(path).once("close", () => {
+    spinner.succeed("Arquitectura generada correctamente!");
+    spinner.start("Creando archivo de entorno...");
+
+    write([
+      {
+        path: `${path}/.env`,
+        data: env,
+      },
+    ]).then(() => {
+      spinner.succeed("Archivo de entorno creado correctamente!");
+      console.log(
+        `Arquitectura generada en ${chalk.bold.whiteBright(
+          path
+        )}\nLa arquitectura generada tendrá la siguiente estructura:\n${projectArchitecture}`
+      );
+    });
+  });
+};
+
+export const write = async (files: Array<any>) => {
+  return Promise.all(
+    files.map((f) => {
+      return new Promise<void>((resolve, reject) => {
+        fs.writeFile(f.path, f.data, (err) => {
+          if (err) reject(err);
+          resolve();
         });
-    }
+      });
+    })
   );
 };

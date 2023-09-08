@@ -1,23 +1,16 @@
-export const entity = `import { ApiProperty } from '@nestjs/swagger';
-import { AbstractEntity } from '@core/database/entity/abstract.entity';
-
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+export const entity = (capitalized: string) => `import { AbstractEntity } from '@core/database/entity/abstract.entity';
+import { Entity } from 'typeorm';
 
 @Entity()
-export class [entity] extends AbstractEntity  {
+export class ${capitalized} extends AbstractEntity {
 }
 
-export enum [entity]OrderBy {
+export enum ${capitalized}OrderBy {
   id = 'id',
   createdAt = 'createdAt',
   updatedAt = 'updatedAt',
 }
 
-export enum [entity]Relations {
+export enum ${capitalized}Relations {
 }
 `;

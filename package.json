@@ -1,6 +1,6 @@
 {
   "name": "cli-one-kenobi",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "",
   "bin": {
     "kenobi": "dist/src/cli/cli.js"
@@ -15,10 +15,21 @@
     "type": "git",
     "url": "git+https://github.com/laviida/CLI-One-Kenobi.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cli",
+    "kenobi",
+    "architecture",
+    "nestjs architecture",
+    "nestjs"
+  ],
+  "author": {
+    "email": "sergi_cn96@hotmail.com",
+    "name": "Sergi Calatayud Navarro",
+    "url": "https://github.com/laviida"
+  },
+  "license": "MIT",
   "homepage": "https://github.com/laviida/CLI-One-Kenobi.git#readme",
+  "readme": "https://github.com/laviida/CLI-One-Kenobi.git#readme",
   "devDependencies": {
     "@types/figlet": "^1.5.5",
     "@types/inquirer": "^9.0.3",

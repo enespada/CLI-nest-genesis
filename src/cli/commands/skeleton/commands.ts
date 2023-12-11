@@ -27,7 +27,7 @@ export const isProjectStructureValid = async (path: string): Promise<boolean> =>
 };
 
 export const clone = (path: string) => {
-  return shell.cd(path).exec("git clone https://github.com/laviida/nestjs-architecture-node-18.17.1.git .", {
+  return shell.cd(path).exec(`git clone https://github.com/laviida/nestjs-architecture-node-18.17.1.git ${path}`, {
     async: true,
   });
 };

@@ -37,20 +37,55 @@ import {
 } from '@nestjs/swagger';
 import { Create${capitalized}Dto } from './dto/create-${lowercased}.dto';
 import { Update${capitalized}Dto } from './dto/update-${lowercased}.dto';
-import { ${capitalized} } from './entities/${lowercased}.entity';
+import { ${capitalized} } from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { ${capitalized}PageOptionsDto } from './dto/${lowercased}-pagination-options.dto';
 
 @Controller('${lowercased}')
 @ApiTags('${capitalized}')
 @UseFilters(ExceptionFilter)
 @UseGuards(JwtUserGuard)
-@UseInterceptors(TransformInterceptor)
+// @UseInterceptors(TransformInterceptor)
 @ApiUnauthorizedResponse({
   description: 'Bearer token must be a valid Token',
 })
 export class ${capitalized}Controller {
   constructor(private readonly ${variable}Service: ${capitalized}Service) {}
 
+  //-----------------------------------------------POST-----------------------------------------------------------
+  @Post()
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Saves an ${lowercased}' })
+  @ApiBody({ type: Create${capitalized}Dto })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'The request sent to the server is invalid or corrupted',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    type: ${capitalized},
+    description: 'Retrieves a saved ${lowercased}',
+  })
+  save(
+    @Body()
+    ${variable}Dto: Create${capitalized}Dto,
+  ) {
+    return this.${variable}Service.create(${variable}Dto);
+  }
+
+  //-----------------------------------------------GET-----------------------------------------------------------
+  @Get()
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Gets all ${lowercased}' })
+  @ApiOkResponse({
+    type: Array<${capitalized}>,
+    isArray: true,
+    description: 'Retrieves an array of ${lowercased}',
+  })
+  getAll() {
+    return this.${variable}Service.find();
+  }
+
+  //-----------------------------------------------GET :id-----------------------------------------------------------
   @Get(':id')
   @ApiBearerAuth()
   @ApiParam({
@@ -75,18 +110,7 @@ export class ${capitalized}Controller {
     });
   }
 
-  @Get()
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Gets all ${lowercased}' })
-  @ApiOkResponse({
-    type: Array<${capitalized}>,
-    isArray: true,
-    description: 'Retrieves an array of ${lowercased}',
-  })
-  getAll() {
-    return this.${variable}Service.find();
-  }
-
+  //-----------------------------------------------GET paginate-----------------------------------------------------------
   @Get('paginate')
   @ApiOperation({ summary: 'Paginate ${lowercased}' })
   @ApiExtraModels(${capitalized})
@@ -103,32 +127,13 @@ export class ${capitalized}Controller {
   @ApiOkResponse({
     type: Array<${capitalized}>,
     isArray: true,
-    description: 'Retrieves an array of users',
+    description: 'Retrieves an array of ${capitalized}',
   })
-  paginate(@Query() pageOptionsDto: ${capitalized}PageOptionsDto) {
-    return this.${variable}Service.paginate(pageOptionsDto);
+  paginate(@Query() ${lowercased}PageOptionsDto: ${capitalized}PageOptionsDto) {
+    return this.${variable}Service.paginate(${lowercased}PageOptionsDto);
   }
 
-  @Post()
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Saves an ${lowercased}' })
-  @ApiBody({ type: Create${capitalized}Dto })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'The request sent to the server is invalid or corrupted',
-  })
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    type: ${capitalized},
-    description: 'Retrieves a saved ${lowercased}',
-  })
-  save(
-    @Body()
-    ${variable}Dto: Create${capitalized}Dto,
-  ) {
-    return this.${variable}Service.create(${variable}Dto);
-  }
-
+  //-----------------------------------------------PUT-----------------------------------------------------------
   @Put()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Updates a ${lowercased}' })
@@ -148,6 +153,7 @@ export class ${capitalized}Controller {
     return this.${variable}Service.update(${variable}Dto);
   }
 
+  //-----------------------------------------------DELETE :id-----------------------------------------------------------
   @Delete(':id')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Deletes a ${lowercased}' })
@@ -159,7 +165,7 @@ export class ${capitalized}Controller {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Chassis successfully deleted',
+    description: '${capitalized} successfully deleted',
   })
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.${variable}Service.remove(id);

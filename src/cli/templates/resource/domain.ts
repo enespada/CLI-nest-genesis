@@ -4,10 +4,9 @@ export const domain = (
   variable: string
 ) => `import { Create${capitalized}Dto } from '@controller/${lowercased}/dto/create-${lowercased}.dto';
 import { Update${capitalized}Dto } from '@controller/${lowercased}/dto/update-${lowercased}.dto';
-import { ${capitalized} } from '@controller/${lowercased}/entities/${lowercased}.entity';
+import { ${capitalized} } from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { from, map, forkJoin } from 'rxjs';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { ${capitalized}PageOptionsDto } from '@controller/${lowercased}/dto/${lowercased}-pagination-options.dto';
 
@@ -18,43 +17,41 @@ export class ${capitalized}DomainService {
     private ${variable}Repository: Repository<${capitalized}>,
   ) {}
 
-  create(createChassisDto: Create${capitalized}Dto) {
-    return from(this.${variable}Repository.save(createChassisDto));
+  async create(create${capitalized}Dto: Create${capitalized}Dto) {
+    return await this.${variable}Repository.save(create${capitalized}Dto);
   }
 
-  update(id: number, updateChassisDto: Update${capitalized}Dto) {
-    return from(this.${variable}Repository.save({ id, ...updateChassisDto }));
+  async update(id: number, update${capitalized}Dto: Update${capitalized}Dto) {
+    return await this.${variable}Repository.save({ id, ...update${capitalized}Dto });
   }
 
-  remove(id: number) {
-    return from(this.${variable}Repository.delete({ id }));
+  async remove(id: number) {
+    return await this.${variable}Repository.delete({ id });
   }
 
-  paginate(pageOptionsDto: ${capitalized}PageOptionsDto) {
-    return forkJoin([
+  async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDto) {
+     let [totalItems, entities] = await Promise.all([
       this.${variable}Repository.count(),
       this.${variable}Repository.find({
         order: {
-          [pageOptionsDto.orderBy]: pageOptionsDto.order,
+          [${variable}PageOptionsDto.orderBy]: ${variable}PageOptionsDto.order,
         },
-        where: pageOptionsDto.where,
-        skip: pageOptionsDto.skip,
-        take: pageOptionsDto.take,
-        relations: pageOptionsDto.relations as unknown as Array<string>,
+        where: ${variable}PageOptionsDto.where,
+        skip: ${variable}PageOptionsDto.skip,
+        take: ${variable}PageOptionsDto.take,
+        relations: ${variable}PageOptionsDto.relations as unknown as Array<string>,
       }),
-    ]).pipe(
-      map(([totalItems, entities]) => {
-        return { totalItems, entities };
-      }),
-    );
+    ]);
+    
+    return { totalItems, entities };
   }
 
-  find(options: FindManyOptions<${capitalized}>) {
-    return from(this.${variable}Repository.find(options));
+  async find(options: FindManyOptions<${capitalized}>) {
+    return this.${variable}Repository.find(options);
   }
 
-  findOne(options: FindOneOptions<${capitalized}>) {
-    return from(this.${variable}Repository.findOne(options));
+  async findOne(options: FindOneOptions<${capitalized}>) {
+    return this.${variable}Repository.findOne(options);
   }
 }
 `;

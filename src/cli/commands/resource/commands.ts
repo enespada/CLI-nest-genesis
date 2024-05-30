@@ -3,9 +3,9 @@ import * as fs from "fs";
 export const isProjectStructureValid = async (
   path: string
 ): Promise<boolean> => {
-  const apiPath = `${path}/src/app/api`;
-  const applicationPath = `${path}/src/app/application`;
-  const domainPath = `${path}/src/app/domain`;
+  const apiPath = `${path}/src/api`;
+  const applicationPath = `${path}/src/application`;
+  const domainPath = `${path}/src/domain`;
 
   // Utilizamos fs.promises para realizar las comprobaciones de forma asíncrona
   const [apiExists, applicationExists, domainExists] = await Promise.all([

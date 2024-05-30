@@ -1,6 +1,9 @@
-export const createDto = (capitalized: string) => `export class Create${capitalized}Dto {}`;
+export const createDto = (capitalized: string) =>
+  `export class Create${capitalized}Dto {}`;
 
-export const updateDto = (capitalized: string) => `import { ApiProperty } from '@nestjs/swagger';
+export const updateDto = (
+  capitalized: string
+) => `import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class Update${capitalized}Dto {
@@ -11,11 +14,14 @@ export class Update${capitalized}Dto {
 }
 `;
 
-export const paginationDto = (capitalized: string, lowercased: string) => `import {
+export const paginationDto = (
+  capitalized: string,
+  lowercased: string
+) => `import {
   ${capitalized},
   ${capitalized}OrderBy,
   ${capitalized}Relations,
-} from '@controller/${lowercased}/entities/${lowercased}.entity';
+} from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';

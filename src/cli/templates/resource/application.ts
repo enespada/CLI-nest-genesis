@@ -4,7 +4,7 @@ export const application = (
   variable: string
 ) => `import { Create${capitalized}Dto } from '@controller/${lowercased}/dto/create-${lowercased}.dto';
 import { Update${capitalized}Dto } from '@controller/${lowercased}/dto/update-${lowercased}.dto';
-import { ${capitalized} } from '@controller/${lowercased}/entities/${lowercased}.entity';
+import { ${capitalized}} from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { ${capitalized}DomainService } from '@domain/${lowercased}/${lowercased}.domain';
 import { Injectable } from '@nestjs/common';
 import { from, map } from 'rxjs';
@@ -17,14 +17,14 @@ import { FindManyOptions, FindOneOptions } from 'typeorm';
 export class ${capitalized}Service {
   constructor(private ${variable}DomainService: ${capitalized}DomainService) {}
 
-  create(createChassisDto: Create${capitalized}Dto) {
+  create(create${capitalized}Dto: Create${capitalized}Dto) {
     return this.${variable}DomainService.create(createChassisDto);
   }
 
-  update(updateChassisDto: Update${capitalized}Dto) {
+  update(update${capitalized}Dto: Update${capitalized}Dto) {
     return this.${variable}DomainService.update(
-      updateChassisDto.id,
-      updateChassisDto,
+      update${capitalized}Dto.id,
+      update${capitalized}Dto,
     );
   }
 

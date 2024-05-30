@@ -9,7 +9,7 @@ import { runSkeletonCommand } from "./commands/skeleton/main";
 
 showHeader();
 
-const kenobi = new Command("kenobi");
+const kenobi = new Command("kenobipro");
 shell.config.silent = true;
 
 kenobi.description(description).version(version);
@@ -29,7 +29,9 @@ kenobi
 
 kenobi
   .command("skeleton")
-  .description("Un proyecto de esqueleto/boilerplate/iniciador para construir rápidamente API RESTful usando NestJS")
+  .description(
+    "Un proyecto de esqueleto/boilerplate/iniciador para construir rápidamente API RESTful usando NestJS"
+  )
   .argument("<path>", "Define la ruta donde construir el esqueleto")
   .action(runSkeletonCommand);
 

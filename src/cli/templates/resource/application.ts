@@ -7,7 +7,6 @@ import { Update${capitalized}Dto } from '@controller/${lowercased}/dto/update-${
 import { ${capitalized}} from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { ${capitalized}DomainService } from '@domain/${lowercased}/${lowercased}.domain';
 import { Injectable } from '@nestjs/common';
-import { from, map } from 'rxjs';
 import { PageDto } from '@core/database/dto/page.dto';
 import { PageMetaDto } from '@core/database/dto/pagination-meta.dto';
 import { ${capitalized}PageOptionsDto } from '@controller/${lowercased}/dto/${lowercased}-pagination-options.dto';
@@ -32,21 +31,19 @@ export class ${capitalized}Service {
     return this.${variable}DomainService.remove(id);
   }
 
-  find(options?: FindManyOptions<${capitalized}>) {
-    return this.${variable}DomainService.find(options ?? {});
+  async find(options?: FindManyOptions<${capitalized}>) {
+    return await this.${variable}DomainService.find(options ?? {});
   }
 
-  findOne(options?: FindOneOptions<${capitalized}>) {
-    return from(this.${variable}DomainService.findOne(options ?? {}));
+  async findOne(options?: FindOneOptions<${capitalized}>) {
+    return await this.${variable}DomainService.findOne(options ?? {});
   }
 
-  paginate(pageOptionsDto: ${capitalized}PageOptionsDto) {
-    return this.${variable}DomainService.paginate(pageOptionsDto).pipe(
-      map(({ totalItems, entities }) => {
-        const pageMetaDto = new PageMetaDto({ totalItems, pageOptionsDto });
-        return new PageDto(entities, pageMetaDto);
-      }),
-    );
+  async paginate(pageOptionsDto: UserPageOptionsDto) {
+    let { totalItems, entities } =
+      await this.usersDomainService.paginate(pageOptionsDto);
+    const pageMetaDto = new PageMetaDto({ totalItems, pageOptionsDto });
+    return new PageDto(entities, pageMetaDto);
   }
 }
 `;

@@ -36,10 +36,10 @@ export class ${capitalized}Service {
     return await this.${variable}DomainService.findOne(options ?? {});
   }
 
-  async paginate(pageOptionsDTO: ${capitalized}PageOptionsDTO) {
+  async paginate(${variable}PageOptionsDTO: ${capitalized}PageOptionsDTO) {
     const { totalItems, entities } =
-      await this.${variable}DomainService.paginate(pageOptionsDTO);
-    const pageMetaDTO = new PageMetaDTO({ totalItems, pageOptionsDTO });
+      await this.${variable}DomainService.paginate(${variable}PageOptionsDTO);
+    const pageMetaDTO = new PageMetaDTO({ totalItems, pageOptionsDto: pageOptionsDto: ${variable}PageOptionsDTO });
     return new PageDTO(entities, pageMetaDTO);
   }
 }

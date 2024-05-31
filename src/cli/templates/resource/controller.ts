@@ -4,7 +4,6 @@ export const controller = (
   variable: string
 ) => `import { ${capitalized}Service } from '@application/${lowercased}/${lowercased}.service';
 import { ExceptionFilter } from '@core/exceptions/global.exception';
-import { TransformInterceptor } from '@core/response/success.response';
 import {
   Body,
   Controller,
@@ -14,12 +13,11 @@ import {
   HttpStatus,
   Param,
   Query,
-  ParseIntPipe,
   Post,
   Put,
   UseFilters,
   UseGuards,
-  UseInterceptors,
+  ParseUUIDPipe
 } from '@nestjs/common';
 import { JwtUserGuard } from '@core/middlewares/jwt/user/jwt-user.guard';
 import {

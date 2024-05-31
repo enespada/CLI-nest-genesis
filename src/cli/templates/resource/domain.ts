@@ -21,8 +21,9 @@ export class ${capitalized}DomainService {
     return await this.${variable}Repository.save(create${capitalized}DTO);
   }
 
-  async update(id: string, update${capitalized}DTO: Update${capitalized}DTO) {
-    return await this.${variable}Repository.save({ id, ...update${capitalized}DTO });
+  async update(update${capitalized}DTO: Update${capitalized}DTO) {
+    const ${variable} = this.${variable}Repository.create(update${capitalized}DTO);
+    return await this.${variable}Repository.update( ${variable}.id,  ${variable});
   }
 
   async remove(id: string) {

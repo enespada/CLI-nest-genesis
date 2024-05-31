@@ -87,3 +87,6 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Testing folder
+/second_try

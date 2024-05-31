@@ -2,7 +2,7 @@ export const appModule = (capitalized: string, lowercased: string) =>
   `import { ${capitalized}Service } from '@application/${lowercased}/${lowercased}.service';
 import { JwtModule } from '@core/middlewares/jwt/jwt.module';
 import { LoggerModule } from '@core/services/logger/logger.module';
-import { ${capitalized} } from '@domain/${lowercased}/entites/${lowercased}.entity';
+import { ${capitalized} } from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { ${capitalized}DomainService } from '@domain/${lowercased}/${lowercased}.domain';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';

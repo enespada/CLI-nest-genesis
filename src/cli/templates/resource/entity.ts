@@ -1,4 +1,6 @@
-export const entity = (capitalized: string) => `import { AbstractEntity } from '@core/database/entity/abstract.entity';
+export const entity = (
+  capitalized: string
+) => `import { AbstractEntity } from '@core/database/entity/abstract.entity';
 import { Entity } from 'typeorm';
 
 @Entity()
@@ -11,6 +13,5 @@ export enum ${capitalized}OrderBy {
   updatedAt = 'updatedAt',
 }
 
-export enum ${capitalized}Relations {
-}
+export enum ${capitalized}Relations {}
 `;

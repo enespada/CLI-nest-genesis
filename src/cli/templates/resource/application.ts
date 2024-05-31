@@ -21,7 +21,7 @@ export class ${capitalized}Service {
   }
 
   async update(update${capitalized}DTO: Update${capitalized}DTO) {
-    return await this.${variable}DomainService.update( update${capitalized}DTO);
+    return await this.${variable}DomainService.update(update${capitalized}DTO);
   }
 
   async remove(id: string) {

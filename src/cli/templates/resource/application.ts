@@ -39,7 +39,10 @@ export class ${capitalized}Service {
   async paginate(${variable}PageOptionsDTO: ${capitalized}PageOptionsDTO) {
     const { totalItems, entities } =
       await this.${variable}DomainService.paginate(${variable}PageOptionsDTO);
-    const pageMetaDTO = new PageMetaDTO({ totalItems, pageOptionsDto: pageOptionsDto: ${variable}PageOptionsDTO });
+    const pageMetaDTO = new PageMetaDTO({
+      totalItems,
+      pageOptionsDto: ${variable}PageOptionsDTO 
+    });
     return new PageDTO(entities, pageMetaDTO);
   }
 }

@@ -5,7 +5,11 @@ import * as fs from "fs";
 import { join } from "path";
 import { constants } from "../../templates/resource/constants";
 import { entity } from "../../templates/resource/entity";
-import { createDto, paginationDto, updateDto } from "../../templates/resource/dtos";
+import {
+  createDTO,
+  paginationDTO,
+  updateDTO,
+} from "../../templates/resource/dtos";
 import { controller } from "../../templates/resource/controller";
 import { application } from "../../templates/resource/application";
 import { domain } from "../../templates/resource/domain";
@@ -27,7 +31,7 @@ export const runResourceCommand = (path: string, resource: string) => {
     const variable = toCamelCase(resource);
     const filename = resource.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 
-    const srcPath = `${path}/src/app`;
+    const srcPath = `${path}/src`;
     const folders = {
       module: {
         path: join(join(srcPath, "api", filename)),
@@ -57,20 +61,20 @@ export const runResourceCommand = (path: string, resource: string) => {
       createDto: {
         path: join(join(srcPath, "api", filename, "dto")),
         filename: `create-${filename}.dto.ts`,
-        data: createDto(entityName),
+        data: createDTO(entityName),
       },
       updateDto: {
         path: join(join(srcPath, "api", filename, "dto")),
         filename: `update-${filename}.dto.ts`,
-        data: updateDto(entityName),
+        data: updateDTO(entityName),
       },
       paginationDto: {
         path: join(join(srcPath, "api", filename, "dto")),
         filename: `${filename}-pagination-options.dto.ts`,
-        data: paginationDto(entityName, filename),
+        data: paginationDTO(entityName, filename),
       },
       entities: {
-        path: join(join(srcPath, "api", filename, "entities")),
+        path: join(join(srcPath, "domain", filename, "entities")),
         filename: `${filename}.entity.ts`,
         data: entity(entityName),
       },
@@ -116,6 +120,10 @@ export const toCamelCase = (input: string, capitalize = false) => {
   return input
     .split(/[^a-zA-Z0-9]+/)
     .filter(Boolean)
-    .map((word) => word.charAt(0)[capitalize ? "toUpperCase" : "toLowerCase"]() + word.slice(1))
+    .map(
+      (word) =>
+        word.charAt(0)[capitalize ? "toUpperCase" : "toLowerCase"]() +
+        word.slice(1)
+    )
     .join("");
 };

@@ -1,10 +1,12 @@
 import * as fs from "fs";
 import * as shell from "shelljs";
 
-export const isProjectStructureValid = async (path: string): Promise<boolean> => {
-  const apiPath = `${path}/src/app/api`;
-  const applicationPath = `${path}/src/app/application`;
-  const domainPath = `${path}/src/app/domain`;
+export const isProjectStructureValid = async (
+  path: string
+): Promise<boolean> => {
+  const apiPath = `${path}/src/api`;
+  const applicationPath = `${path}/src/application`;
+  const domainPath = `${path}/src/domain`;
 
   // Utilizamos fs.promises para realizar las comprobaciones de forma asíncrona
   const [apiExists, applicationExists, domainExists] = await Promise.all([
@@ -27,7 +29,12 @@ export const isProjectStructureValid = async (path: string): Promise<boolean> =>
 };
 
 export const clone = (path: string) => {
-  return shell.cd(path).exec(`git clone https://github.com/laviida/nestjs-architecture-node-18.17.1.git ${path}`, {
-    async: true,
-  });
+  return shell
+    .cd(path)
+    .exec(
+      `git clone https://github.com/enespada/nest-architecture.git ${path}`,
+      {
+        async: true,
+      }
+    );
 };

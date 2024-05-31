@@ -1,27 +1,32 @@
-export const createDto = (capitalized: string) => `export class Create${capitalized}Dto {}`;
+export const createDTO = (capitalized: string) =>
+  `export class Create${capitalized}DTO {}`;
 
-export const updateDto = (capitalized: string) => `import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+export const updateDTO = (
+  capitalized: string
+) => `import { ApiProperty } from '@nestjs/swagger';
+import { IsUUID } from 'class-validator';
 
-export class Update${capitalized}Dto {
+export class Update${capitalized}DTO {
   @ApiProperty()
-  @IsNumber()
-  @IsNotEmpty()
-  id: number;
+  @IsUUID()
+  id: string;
 }
 `;
 
-export const paginationDto = (capitalized: string, lowercased: string) => `import {
+export const paginationDTO = (
+  capitalized: string,
+  lowercased: string
+) => `import {
   ${capitalized},
   ${capitalized}OrderBy,
   ${capitalized}Relations,
-} from '@controller/${lowercased}/entities/${lowercased}.entity';
-import { PageOptionsDto } from '@core/database/dto/pagination-options.dto';
+} from '@domain/${lowercased}/entities/${lowercased}.entity';
+import { PageOptionsDTO } from '@core/database/dto/pagination-options.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsOptional } from 'class-validator';
 
-export class ${capitalized}PageOptionsDto extends PageOptionsDto {
+export class ${capitalized}PageOptionsDTO extends PageOptionsDTO {
   @ApiProperty({ enum: ${capitalized}OrderBy, default: ${capitalized}OrderBy.id, required: false })
   @IsEnum(${capitalized}OrderBy)
   @IsOptional()

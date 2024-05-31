@@ -35,10 +35,10 @@ import {
   ApiUnauthorizedResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { Create${capitalized}Dto } from './dto/create-${lowercased}.dto';
-import { Update${capitalized}Dto } from './dto/update-${lowercased}.dto';
+import { Create${capitalized}DTO } from './dto/create-${lowercased}.dto';
+import { Update${capitalized}DTO } from './dto/update-${lowercased}.dto';
 import { ${capitalized} } from '@domain/${lowercased}/entities/${lowercased}.entity';
-import { ${capitalized}PageOptionsDto } from './dto/${lowercased}-pagination-options.dto';
+import { ${capitalized}PageOptionsDTO } from './dto/${lowercased}-pagination-options.dto';
 
 @Controller('${lowercased}')
 @ApiTags('${capitalized}')
@@ -55,7 +55,7 @@ export class ${capitalized}Controller {
   @Post()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Saves an ${lowercased}' })
-  @ApiBody({ type: Create${capitalized}Dto })
+  @ApiBody({ type: Create${capitalized}DTO })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
     description: 'The request sent to the server is invalid or corrupted',
@@ -67,9 +67,9 @@ export class ${capitalized}Controller {
   })
   save(
     @Body()
-    ${variable}Dto: Create${capitalized}Dto,
+    ${variable}DTO: Create${capitalized}DTO,
   ) {
-    return this.${variable}Service.create(${variable}Dto);
+    return this.${variable}Service.create(${variable}DTO);
   }
 
   //-----------------------------------------------GET-----------------------------------------------------------
@@ -84,32 +84,7 @@ export class ${capitalized}Controller {
   getAll() {
     return this.${variable}Service.find();
   }
-
-  //-----------------------------------------------GET :id-----------------------------------------------------------
-  @Get(':id')
-  @ApiBearerAuth()
-  @ApiParam({
-    name: 'id',
-    type: String,
-    description: 'Unique identifier of the ${lowercased}',
-  })
-  @ApiOperation({ summary: 'Gets a ${lowercased} by given id' })
-  @ApiOkResponse({
-    type: ${capitalized},
-    description: 'Retrieves ${lowercased} data',
-  })
-  @ApiResponse({
-    description: 'There is no ${lowercased} with the given id',
-    status: HttpStatus.NOT_FOUND,
-  })
-  get(@Param('id', ParseIntPipe) id: number) {
-    return this.${variable}Service.findOne({
-      where: {
-        id,
-      }
-    });
-  }
-
+  
   //-----------------------------------------------GET paginate-----------------------------------------------------------
   @Get('paginate')
   @ApiOperation({ summary: 'Paginate ${lowercased}' })
@@ -129,15 +104,40 @@ export class ${capitalized}Controller {
     isArray: true,
     description: 'Retrieves an array of ${capitalized}',
   })
-  paginate(@Query() ${lowercased}PageOptionsDto: ${capitalized}PageOptionsDto) {
-    return this.${variable}Service.paginate(${lowercased}PageOptionsDto);
+  paginate(@Query() ${lowercased}PageOptionsDTO: ${capitalized}PageOptionsDTO) {
+    return this.${variable}Service.paginate(${lowercased}PageOptionsDTO);
+  }
+
+  //-----------------------------------------------GET :id-----------------------------------------------------------
+  @Get(':id')
+  @ApiBearerAuth()
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'Unique identifier of the ${lowercased}',
+  })
+  @ApiOperation({ summary: 'Gets a ${lowercased} by given id' })
+  @ApiOkResponse({
+    type: ${capitalized},
+    description: 'Retrieves ${lowercased} data',
+  })
+  @ApiResponse({
+    description: 'There is no ${lowercased} with the given id',
+    status: HttpStatus.NOT_FOUND,
+  })
+  get(@Param('id', ParseUUIDPipe) id: string) {
+    return this.${variable}Service.findOne({
+      where: {
+        id,
+      }
+    });
   }
 
   //-----------------------------------------------PUT-----------------------------------------------------------
   @Put()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Updates a ${lowercased}' })
-  @ApiBody({ type: Update${capitalized}Dto })
+  @ApiBody({ type: Update${capitalized}DTO })
   @ApiOkResponse({
     type: ${capitalized},
     description: 'Retrieves an updated ${lowercased}',
@@ -148,9 +148,9 @@ export class ${capitalized}Controller {
   })
   update(
     @Body()
-    ${variable}Dto: Update${capitalized}Dto,
+    ${variable}DTO: Update${capitalized}DTO,
   ) {
-    return this.${variable}Service.update(${variable}Dto);
+    return this.${variable}Service.update(${variable}DTO);
   }
 
   //-----------------------------------------------DELETE :id-----------------------------------------------------------
@@ -167,7 +167,7 @@ export class ${capitalized}Controller {
     status: HttpStatus.OK,
     description: '${capitalized} successfully deleted',
   })
-  delete(@Param('id', ParseIntPipe) id: number) {
+  delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.${variable}Service.remove(id);
   }
 }

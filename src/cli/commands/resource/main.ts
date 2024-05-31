@@ -6,9 +6,9 @@ import { join } from "path";
 import { constants } from "../../templates/resource/constants";
 import { entity } from "../../templates/resource/entity";
 import {
-  createDto,
-  paginationDto,
-  updateDto,
+  createDTO,
+  paginationDTO,
+  updateDTO,
 } from "../../templates/resource/dtos";
 import { controller } from "../../templates/resource/controller";
 import { application } from "../../templates/resource/application";
@@ -61,17 +61,17 @@ export const runResourceCommand = (path: string, resource: string) => {
       createDto: {
         path: join(join(srcPath, "api", filename, "dto")),
         filename: `create-${filename}.dto.ts`,
-        data: createDto(entityName),
+        data: createDTO(entityName),
       },
       updateDto: {
         path: join(join(srcPath, "api", filename, "dto")),
         filename: `update-${filename}.dto.ts`,
-        data: updateDto(entityName),
+        data: updateDTO(entityName),
       },
       paginationDto: {
         path: join(join(srcPath, "api", filename, "dto")),
         filename: `${filename}-pagination-options.dto.ts`,
-        data: paginationDto(entityName, filename),
+        data: paginationDTO(entityName, filename),
       },
       entities: {
         path: join(join(srcPath, "domain", filename, "entities")),

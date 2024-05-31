@@ -2,33 +2,30 @@ export const application = (
   capitalized: string,
   lowercased: string,
   variable: string
-) => `import { Create${capitalized}Dto } from '@controller/${lowercased}/dto/create-${lowercased}.dto';
-import { Update${capitalized}Dto } from '@controller/${lowercased}/dto/update-${lowercased}.dto';
-import { ${capitalized}} from '@domain/${lowercased}/entities/${lowercased}.entity';
+) => `import { Create${capitalized}DTO } from '@controller/${lowercased}/dto/create-${lowercased}.dto';
+import { Update${capitalized}DTO } from '@controller/${lowercased}/dto/update-${lowercased}.dto';
+import { ${capitalized} } from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { ${capitalized}DomainService } from '@domain/${lowercased}/${lowercased}.domain';
 import { Injectable } from '@nestjs/common';
-import { PageDto } from '@core/database/dto/page.dto';
-import { PageMetaDto } from '@core/database/dto/pagination-meta.dto';
-import { ${capitalized}PageOptionsDto } from '@controller/${lowercased}/dto/${lowercased}-pagination-options.dto';
+import { PageDTO } from '@core/database/dto/page.dto';
+import { PageMetaDTO } from '@core/database/dto/pagination-meta.dto';
+import { ${capitalized}PageOptionsDTO } from '@controller/${lowercased}/dto/${lowercased}-pagination-options.dto';
 import { FindManyOptions, FindOneOptions } from 'typeorm';
 
 @Injectable()
 export class ${capitalized}Service {
   constructor(private ${variable}DomainService: ${capitalized}DomainService) {}
 
-  create(create${capitalized}Dto: Create${capitalized}Dto) {
-    return this.${variable}DomainService.create(createChassisDto);
+  async create(create${capitalized}DTO: Create${capitalized}DTO) {
+    return await this.${variable}DomainService.create(create${capitalized}DTO);
   }
 
-  update(update${capitalized}Dto: Update${capitalized}Dto) {
-    return this.${variable}DomainService.update(
-      update${capitalized}Dto.id,
-      update${capitalized}Dto,
-    );
+  async update(update${capitalized}DTO: Update${capitalized}DTO) {
+    return await this.${variable}DomainService.update( update${capitalized}DTO);
   }
 
-  remove(id: number) {
-    return this.${variable}DomainService.remove(id);
+  async remove(id: string) {
+    return await this.${variable}DomainService.remove(id);
   }
 
   async find(options?: FindManyOptions<${capitalized}>) {
@@ -39,11 +36,11 @@ export class ${capitalized}Service {
     return await this.${variable}DomainService.findOne(options ?? {});
   }
 
-  async paginate(pageOptionsDto: UserPageOptionsDto) {
-    let { totalItems, entities } =
-      await this.usersDomainService.paginate(pageOptionsDto);
-    const pageMetaDto = new PageMetaDto({ totalItems, pageOptionsDto });
-    return new PageDto(entities, pageMetaDto);
+  async paginate(pageOptionsDTO: ${capitalized}PageOptionsDTO) {
+    const { totalItems, entities } =
+      await this.${variable}DomainService.paginate(pageOptionsDTO);
+    const pageMetaDTO = new PageMetaDTO({ totalItems, pageOptionsDTO });
+    return new PageDTO(entities, pageMetaDTO);
   }
 }
 `;

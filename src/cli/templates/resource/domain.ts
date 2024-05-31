@@ -2,13 +2,13 @@ export const domain = (
   capitalized: string,
   lowercased: string,
   variable: string
-) => `import { Create${capitalized}Dto } from '@controller/${lowercased}/dto/create-${lowercased}.dto';
-import { Update${capitalized}Dto } from '@controller/${lowercased}/dto/update-${lowercased}.dto';
+) => `import { Create${capitalized}DTO } from '@controller/${lowercased}/dto/create-${lowercased}.dto';
+import { Update${capitalized}DTO } from '@controller/${lowercased}/dto/update-${lowercased}.dto';
 import { ${capitalized} } from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
-import { ${capitalized}PageOptionsDto } from '@controller/${lowercased}/dto/${lowercased}-pagination-options.dto';
+import { ${capitalized}PageOptionsDTO } from '@controller/${lowercased}/dto/${lowercased}-pagination-options.dto';
 
 @Injectable()
 export class ${capitalized}DomainService {
@@ -17,29 +17,29 @@ export class ${capitalized}DomainService {
     private ${variable}Repository: Repository<${capitalized}>,
   ) {}
 
-  async create(create${capitalized}Dto: Create${capitalized}Dto) {
-    return await this.${variable}Repository.save(create${capitalized}Dto);
+  async create(create${capitalized}DTO: Create${capitalized}DTO) {
+    return await this.${variable}Repository.save(create${capitalized}DTO);
   }
 
-  async update(id: number, update${capitalized}Dto: Update${capitalized}Dto) {
-    return await this.${variable}Repository.save({ id, ...update${capitalized}Dto });
+  async update(id: string, update${capitalized}DTO: Update${capitalized}DTO) {
+    return await this.${variable}Repository.save({ id, ...update${capitalized}DTO });
   }
 
-  async remove(id: number) {
-    return await this.${variable}Repository.delete({ id });
+  async remove(id: string) {
+    return await this.${variable}Repository.delete(id);
   }
 
-  async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDto) {
-     let [totalItems, entities] = await Promise.all([
+  async paginate(${variable}PageOptionsDTO: ${capitalized}PageOptionsDTO) {
+    const [totalItems, entities] = await Promise.all([
       this.${variable}Repository.count(),
       this.${variable}Repository.find({
         order: {
-          [${variable}PageOptionsDto.orderBy]: ${variable}PageOptionsDto.order,
+          [${variable}PageOptionsDTO.orderBy]: ${variable}PageOptionsDTO.order,
         },
-        where: ${variable}PageOptionsDto.where,
-        skip: ${variable}PageOptionsDto.skip,
-        take: ${variable}PageOptionsDto.take,
-        relations: ${variable}PageOptionsDto.relations as unknown as Array<string>,
+        where: ${variable}PageOptionsDTO.where,
+        skip: ${variable}PageOptionsDTO.skip,
+        take: ${variable}PageOptionsDTO.take,
+        relations: ${variable}PageOptionsDTO.relations as unknown as Array<string>,
       }),
     ]);
     

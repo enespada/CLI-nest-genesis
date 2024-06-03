@@ -1,6 +1,6 @@
 {
   "name": "nest-genesis",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "bin": {
     "genesis": "dist/src/cli/cli.js"
@@ -25,7 +25,7 @@
   ],
   "author": {
     "email": "espada.ep@gmail.com",
-    "name": "Enriuq Espada Calvo",
+    "name": "Enrique Espada Calvo",
     "url": "https://github.com/enespada"
   },
   "contributors": [

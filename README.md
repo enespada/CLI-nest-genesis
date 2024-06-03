@@ -28,7 +28,7 @@ Consistent Code Style: Follows coding best practices and ensures that your code 
   $ genesis --help
 ```
 
-## Arcuitecture
+## Architecture
 
 ```bash
 📂 root

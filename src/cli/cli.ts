@@ -9,7 +9,7 @@ import { runSkeletonCommand } from "./commands/skeleton/main";
 
 showHeader();
 
-const kenobi = new Command("kenobi");
+const kenobi = new Command("genesis");
 shell.config.silent = true;
 
 kenobi.description(description).version(version);

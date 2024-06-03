@@ -65,9 +65,9 @@ export class ${capitalized}Controller {
   })
   save(
     @Body()
-    ${variable}DTO: Create${capitalized}DTO,
+    create${variable}Dto: Create${capitalized}DTO,
   ) {
-    return this.${variable}Service.create(${variable}DTO);
+    return this.${variable}Service.create(create${variable}Dto);
   }
 
   //-----------------------------------------------GET-----------------------------------------------------------
@@ -102,8 +102,8 @@ export class ${capitalized}Controller {
     isArray: true,
     description: 'Retrieves an array of ${capitalized}',
   })
-  paginate(@Query() ${lowercased}PageOptionsDTO: ${capitalized}PageOptionsDTO) {
-    return this.${variable}Service.paginate(${lowercased}PageOptionsDTO);
+  paginate(@Query() ${lowercased}PageOptionsDto: ${capitalized}PageOptionsDTO) {
+    return this.${variable}Service.paginate(${lowercased}PageOptionsDto);
   }
 
   //-----------------------------------------------GET :id-----------------------------------------------------------
@@ -146,9 +146,9 @@ export class ${capitalized}Controller {
   })
   update(
     @Body()
-    ${variable}DTO: Update${capitalized}DTO,
+    update${capitalized}Dto: Update${capitalized}DTO,
   ) {
-    return this.${variable}Service.update(${variable}DTO);
+    return this.${variable}Service.update(update${capitalized}Dto);
   }
 
   //-----------------------------------------------DELETE :id-----------------------------------------------------------

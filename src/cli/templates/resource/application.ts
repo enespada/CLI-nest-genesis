@@ -16,12 +16,12 @@ import { FindManyOptions, FindOneOptions } from 'typeorm';
 export class ${capitalized}Service {
   constructor(private ${variable}DomainService: ${capitalized}DomainService) {}
 
-  async create(create${capitalized}DTO: Create${capitalized}DTO) {
-    return await this.${variable}DomainService.create(create${capitalized}DTO);
+  async create(create${capitalized}Dto: Create${capitalized}DTO) {
+    return await this.${variable}DomainService.create(create${capitalized}Dto);
   }
 
-  async update(update${capitalized}DTO: Update${capitalized}DTO) {
-    return await this.${variable}DomainService.update( update${capitalized}DTO);
+  async update(update${capitalized}Dto: Update${capitalized}DTO) {
+    return await this.${variable}DomainService.update(update${capitalized}Dto);
   }
 
   async remove(id: string) {
@@ -36,14 +36,14 @@ export class ${capitalized}Service {
     return await this.${variable}DomainService.findOne(options ?? {});
   }
 
-  async paginate(${variable}PageOptionsDTO: ${capitalized}PageOptionsDTO) {
+  async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDTO) {
     const { totalItems, entities } =
-      await this.${variable}DomainService.paginate(${variable}PageOptionsDTO);
-    const pageMetaDTO = new PageMetaDTO({
+      await this.${variable}DomainService.paginate(${variable}PageOptionsDto);
+    const pageMetaDto = new PageMetaDTO({
       totalItems,
-      pageOptionsDto: ${variable}PageOptionsDTO 
+      pageOptionsDto: ${variable}PageOptionsDto 
     });
-    return new PageDTO(entities, pageMetaDTO);
+    return new PageDTO(entities, pageMetaDto);
   }
 }
 `;

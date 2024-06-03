@@ -9,25 +9,25 @@ import { runSkeletonCommand } from "./commands/skeleton/main";
 
 showHeader();
 
-const kenobi = new Command("kenobi");
+const genesis = new Command("genesis");
 shell.config.silent = true;
 
-kenobi.description(description).version(version);
+genesis.description(description).version(version);
 
-kenobi
+genesis
   .command("husky")
   .description("Inicializar husky")
   .argument("<path>", "Define la ruta donde instalar husky")
   .action(runHuskyCommand);
 
-kenobi
+genesis
   .command("resource")
   .description("Crea un recurso para la ruta de back-end especificada")
   .argument("<path>", "Define la ruta raíz donde instalar el recurso")
   .argument("<resource>", "Define el nombre del recurso (usa el plural)")
   .action(runResourceCommand);
 
-kenobi
+genesis
   .command("skeleton")
   .description(
     "Un proyecto de esqueleto/boilerplate/iniciador para construir rápidamente API RESTful usando NestJS"
@@ -35,4 +35,4 @@ kenobi
   .argument("<path>", "Define la ruta donde construir el esqueleto")
   .action(runSkeletonCommand);
 
-kenobi.parse(process.argv);
+genesis.parse(process.argv);

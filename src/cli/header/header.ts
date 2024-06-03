@@ -20,4 +20,6 @@ const header = boxen(`${cliName}\n\n${poweredBy}`, {
   borderColor: "yellow",
 });
 
-export const showHeader = () => console.log(header);
+export const showHeader = () => {
+  // console.log(header);
+};

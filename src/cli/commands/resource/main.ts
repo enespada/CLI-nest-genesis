@@ -148,11 +148,26 @@ export const addImportToAppModule = (
     }
 
     const importStatement = `import { ${moduleName}Module } from '${moduleImportPath}';\n`;
-    const updatedData = data.replace(
-      /(imports: \[)([^]*?)(\])/,
-      `$1\n    ${moduleName}Module,$2$3`
-    );
+    const moduleDeclaration = `    ${moduleName}Module,`;
 
+    // Check for specific lines and add after them
+    const configModuleRegex =
+      /ConfigModule\.forRoot\({[^]*?}\),\n    TypeOrmModule\.forRootAsync\({[^]*?}\),/;
+    let updatedData;
+    if (configModuleRegex.test(data)) {
+      updatedData = data.replace(
+        configModuleRegex,
+        (match) => `${match}\n${moduleDeclaration}`
+      );
+    } else {
+      // Add as the first import if specific lines not found
+      updatedData = data.replace(
+        /(imports: \[)([^]*?)(\])/,
+        `$1\n${moduleDeclaration}$2$3`
+      );
+    }
+
+    // Add the import statement at the top
     const newData = importStatement + updatedData;
 
     fs.writeFile(appModulePath, newData, "utf8", (err) => {

@@ -38,19 +38,18 @@ Consistent Code Style: Follows coding best practices and ensures that your code 
 ├── 📜 package-lock.json
 ├── 📜 package.json
 ├── 📂 src
-│   ├── 📂 app
-│   │   ├── 🌐 api
-│   │   ├── 🚀 application
-│   │   ├── 🏢 domain
-│   │   ├── 🔧 core
-│   │   ├── 📜 app.module.ts
+│   ├── 🌐 api
+│   ├── 🚀 application
 │   ├── 🎨 assets
 │   │   ├── 🌎 favicon.ico
 │   │   ├── 🖼️  favicon.jpg
 │   │   └── 📜 swagger.css.ts
+│   ├── 🔧 core
+│   ├── 🏢 domain
 │   ├── 📂 environments
 │   │   ├── 📝 dto
 │   │   └── 📜 environment.ts
+│   ├── 📜 app.module.ts
 │   └── 📜 main.ts
 ├── 📂 test
 │   ├── 📜 app.e2e-spec.ts
@@ -61,4 +60,4 @@ Consistent Code Style: Follows coding best practices and ensures that your code 
 
 ## License
 
-CLI One Kenobi is [MIT](https://choosealicense.com/licenses/mit/) licensed.
+This project is [MIT](https://choosealicense.com/licenses/mit/) licensed. For more details take a look at the file [LICENSE](./LICENSE).

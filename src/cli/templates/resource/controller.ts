@@ -65,9 +65,9 @@ export class ${capitalized}Controller {
   })
   save(
     @Body()
-    create${variable}Dto: Create${capitalized}DTO,
+    create${capitalized}Dto: Create${capitalized}DTO,
   ) {
-    return this.${variable}Service.create(create${variable}Dto);
+    return this.${variable}Service.create(create${capitalized}Dto);
   }
 
   //-----------------------------------------------GET-----------------------------------------------------------

@@ -17,12 +17,12 @@ export class ${capitalized}DomainService {
     private ${variable}Repository: Repository<${capitalized}>,
   ) {}
 
-  async create(create${capitalized}DTO: Create${capitalized}DTO) {
-    return await this.${variable}Repository.save(create${capitalized}DTO);
+  async create(create${capitalized}Dto: Create${capitalized}DTO) {
+    return await this.${variable}Repository.save(create${capitalized}Dto);
   }
 
-  async update(update${capitalized}DTO: Update${capitalized}DTO) {
-    const ${variable} = this.${variable}Repository.create(update${capitalized}DTO);
+  async update(update${capitalized}Dto: Update${capitalized}DTO) {
+    const ${variable} = this.${variable}Repository.create(update${capitalized}Dto);
     return await this.${variable}Repository.update( ${variable}.id,  ${variable});
   }
 
@@ -30,17 +30,17 @@ export class ${capitalized}DomainService {
     return await this.${variable}Repository.delete(id);
   }
 
-  async paginate(${variable}PageOptionsDTO: ${capitalized}PageOptionsDTO) {
+  async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDTO) {
     const [totalItems, entities] = await Promise.all([
       this.${variable}Repository.count(),
       this.${variable}Repository.find({
         order: {
           [${variable}PageOptionsDTO.orderBy]: ${variable}PageOptionsDTO.order,
         },
-        where: ${variable}PageOptionsDTO.where,
-        skip: ${variable}PageOptionsDTO.skip,
-        take: ${variable}PageOptionsDTO.take,
-        relations: ${variable}PageOptionsDTO.relations as unknown as Array<string>,
+        where: ${variable}PageOptionsDto.where,
+        skip: ${variable}PageOptionsDto.skip,
+        take: ${variable}PageOptionsDto.take,
+        relations: ${variable}PageOptionsDto.relations as unknown as Array<string>,
       }),
     ]);
     

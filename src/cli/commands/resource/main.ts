@@ -2,7 +2,7 @@ import ora from "ora";
 import { isProjectStructureValid } from "./commands";
 import { projectArchitecture } from "../../templates/resource/project-architecture";
 import * as fs from "fs";
-import { join } from "path";
+import path, { join } from "path";
 import { constants } from "../../templates/resource/constants";
 import { entity } from "../../templates/resource/entity";
 import {
@@ -83,6 +83,7 @@ export const runResourceCommand = (path: string, resource: string) => {
 
     mkdir(values.map((f) => f.path)).then(() => {
       write(values).then(() => {
+        addImportToAppModule(entityName);
         spinner.succeed();
         console.log("Recursos creados correctamente!");
       });
@@ -126,4 +127,38 @@ export const toCamelCase = (input: string, capitalize = false) => {
         word.slice(1)
     )
     .join("");
+};
+
+export const addImportToAppModule = (moduleName: string | undefined) => {
+  if (!moduleName) {
+    console.error("Please provide a module name.");
+    process.exit(1);
+  }
+
+  const appModulePath = path.join(__dirname, "src/app.module.ts");
+  const moduleImportPath = `@controller/${moduleName.toLowerCase()}/${moduleName.toLowerCase()}.module`;
+
+  fs.readFile(appModulePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading AppModule file:", err);
+      process.exit(1);
+    }
+
+    const importStatement = `import { ${moduleName}Module } from '${moduleImportPath}';\n`;
+    const updatedData = data.replace(
+      /(imports: \[)([^]*?)(\])/,
+      `$1\n    ${moduleName}Module,$2$3`
+    );
+
+    const newData = importStatement + updatedData;
+
+    fs.writeFile(appModulePath, newData, "utf8", (err) => {
+      if (err) {
+        console.error("Error writing to AppModule file:", err);
+        process.exit(1);
+      }
+
+      console.log(`${moduleName}Module has been added to AppModule imports.`);
+    });
+  });
 };

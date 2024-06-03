@@ -19,7 +19,7 @@ Consistent Code Style: Follows coding best practices and ensures that your code 
 ## Installation
 
 ```bash
-  $ npm install -g cli-nest-genesis
+  $ npm install -g nest-genesis
 ```
 
 ## Usage

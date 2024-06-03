@@ -83,7 +83,7 @@ export const runResourceCommand = (path: string, resource: string) => {
 
     mkdir(values.map((f) => f.path)).then(() => {
       write(values).then(() => {
-        addImportToAppModule(entityName);
+        addImportToAppModule(path, entityName);
         spinner.succeed();
         console.log("Recursos creados correctamente!");
       });
@@ -129,13 +129,16 @@ export const toCamelCase = (input: string, capitalize = false) => {
     .join("");
 };
 
-export const addImportToAppModule = (moduleName: string | undefined) => {
+export const addImportToAppModule = (
+  path: string,
+  moduleName: string | undefined
+) => {
   if (!moduleName) {
     console.error("Please provide a module name.");
     process.exit(1);
   }
 
-  const appModulePath = path.join(__dirname, "src/app.module.ts");
+  const appModulePath = join(path, "src/app.module.ts");
   const moduleImportPath = `@controller/${moduleName.toLowerCase()}/${moduleName.toLowerCase()}.module`;
 
   fs.readFile(appModulePath, "utf8", (err, data) => {

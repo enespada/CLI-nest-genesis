@@ -23,7 +23,7 @@ export class ${capitalized}DomainService {
 
   async update(update${capitalized}Dto: Update${capitalized}DTO) {
     const ${variable} = this.${variable}Repository.create(update${capitalized}Dto);
-    return await this.${variable}Repository.update( ${variable}.id,  ${variable});
+    return await this.${variable}Repository.update(${variable}.id, ${variable});
   }
 
   async remove(id: string) {
@@ -35,7 +35,7 @@ export class ${capitalized}DomainService {
       this.${variable}Repository.count(),
       this.${variable}Repository.find({
         order: {
-          [${variable}PageOptionsDTO.orderBy]: ${variable}PageOptionsDTO.order,
+          [${variable}PageOptionsDto.orderBy]: ${variable}PageOptionsDto.order,
         },
         where: ${variable}PageOptionsDto.where,
         skip: ${variable}PageOptionsDto.skip,

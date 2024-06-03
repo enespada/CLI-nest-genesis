@@ -13,11 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/laviida/CLI-One-Kenobi.git"
+    "url": "git+https://github.com/enespada/CLI-nest-genesis"
   },
   "keywords": [
     "cli",
-    "kenobi",
+    "genesis",
+    "nest",
     "architecture",
     "nestjs architecture",
     "nestjs"

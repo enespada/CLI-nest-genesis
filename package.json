@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "kenobi": "dist/src/cli/cli.js"
+    "genesis": "dist/src/cli/cli.js"
   },
   "main": "dist/src/cli/cli.js",
   "scripts": {

@@ -1,4 +1,4 @@
-[![NPM](https://img.shields.io/badge/npm-v9.6.7-%232C8EBB.svg?logo=npm&logoColor=white)](https://www.npmjs.com/) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/) [![NodeJS](https://img.shields.io/badge/node.js-v18.17.1-6DA55F?logo=node.js&logoColor=white)](https://nodejs.org/en/)
+[![NPM](https://img.shields.io/badge/npm-v10.1.0-%232C8EBB.svg?logo=npm&logoColor=white)](https://www.npmjs.com/) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/) [![NodeJS](https://img.shields.io/badge/node.js-v20.9.0-6DA55F?logo=node.js&logoColor=white)](https://nodejs.org/en/)
 
 # CLI Nest Genesis
 

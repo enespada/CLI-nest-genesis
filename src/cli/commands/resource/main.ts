@@ -2,8 +2,7 @@ import ora from "ora";
 import { isProjectStructureValid } from "./commands";
 import { projectArchitecture } from "../../templates/resource/project-architecture";
 import * as fs from "fs";
-import path, { join } from "path";
-import { constants } from "../../templates/resource/constants";
+import { join } from "path";
 import { entity } from "../../templates/resource/entity";
 import {
   createDTO,
@@ -53,11 +52,11 @@ export const runResourceCommand = (path: string, resource: string) => {
         filename: `${filename}.domain.ts`,
         data: domain(entityName, filename, variable),
       },
-      constants: {
-        path: join(join(srcPath, "api", filename, "constants")),
-        filename: `${filename}.constants.ts`,
-        data: constants(entityName, filename),
-      },
+      // constants: {
+      //   path: join(join(srcPath, "api", filename, "constants")),
+      //   filename: `${filename}.constants.ts`,
+      //   data: constants(entityName, filename),
+      // },
       createDto: {
         path: join(join(srcPath, "api", filename, "dto")),
         filename: `create-${filename}.dto.ts`,
@@ -76,7 +75,7 @@ export const runResourceCommand = (path: string, resource: string) => {
       entities: {
         path: join(join(srcPath, "domain", filename, "entities")),
         filename: `${filename}.entity.ts`,
-        data: entity(entityName),
+        data: entity(entityName, filename),
       },
     };
     const values = Object.values(folders);

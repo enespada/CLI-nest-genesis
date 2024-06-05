@@ -4,7 +4,7 @@ export const domain = (
   variable: string
 ) => `import { Create${capitalized}DTO } from '@controller/${lowercased}/dto/create-${lowercased}.dto';
 import { Update${capitalized}DTO } from '@controller/${lowercased}/dto/update-${lowercased}.dto';
-import { ${capitalized} } from '@domain/${lowercased}/entities/${lowercased}.entity';
+import { ${capitalized}, ${capitalized}Where } from '@domain/${lowercased}/entities/${lowercased}.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
@@ -31,13 +31,24 @@ export class ${capitalized}DomainService {
   }
 
   async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDTO) {
+    const where = ${variable}PageOptionsDTO.where
+      ? combineObjectsArray(
+          Object.entries(${variable}PageOptionsDTO.where).map(([k, v]) => {
+            const relationTrace: string = ${capitalized}Where[k];
+            const obj = { [relationTrace]: changeToLike(v) };
+
+            return nestDottedObject(obj);
+          }),
+        )
+      : {};
+
     const [totalItems, entities] = await Promise.all([
       this.${variable}Repository.count(),
       this.${variable}Repository.find({
         order: {
           [${variable}PageOptionsDto.orderBy]: ${variable}PageOptionsDto.order,
         },
-        where: ${variable}PageOptionsDto.where,
+        where: where,
         skip: ${variable}PageOptionsDto.skip,
         take: ${variable}PageOptionsDto.take,
         relations: ${variable}PageOptionsDto.relations as unknown as Array<string>,

@@ -1,6 +1,6 @@
 {
   "name": "nest-genesis",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "bin": {
     "genesis": "dist/src/cli/cli.js"

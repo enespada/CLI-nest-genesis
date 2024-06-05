@@ -5,6 +5,11 @@ export const domain = (
 ) => `import { Create${capitalized}DTO } from '@controller/${lowercased}/dto/create-${lowercased}.dto';
 import { Update${capitalized}DTO } from '@controller/${lowercased}/dto/update-${lowercased}.dto';
 import { ${capitalized}, ${capitalized}Where } from '@domain/${lowercased}/entities/${lowercased}.entity';
+import {
+  changeToLike,
+  combineObjectsArray,
+  nestDottedObject,
+} from '@core/utils/utils';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
@@ -31,9 +36,9 @@ export class ${capitalized}DomainService {
   }
 
   async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDTO) {
-    const where = ${variable}PageOptionsDTO.where
+    const where = ${variable}PageOptionsDto.where
       ? combineObjectsArray(
-          Object.entries(${variable}PageOptionsDTO.where).map(([k, v]) => {
+          Object.entries(${variable}PageOptionsDto.where).map(([k, v]) => {
             const relationTrace: string = ${capitalized}Where[k];
             const obj = { [relationTrace]: changeToLike(v) };
 

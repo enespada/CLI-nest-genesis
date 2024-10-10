@@ -18,6 +18,7 @@ export const projectArchitecture = `📂 ${chalk.bold.whiteBright("root")}
 │   ├── 📂 ${chalk.bold.whiteBright("environments")}
 │   │   ├── 📝 ${chalk.bold.whiteBright("dto")}
 │   │   └── 📜 ${chalk.bold.whiteBright("environment.ts")}
+│   │   ├──${chalk.bold.whiteBright("infrastructure")}
 │   │   ├──${chalk.bold.whiteBright("app.module.ts")}
 │   └── 📜 ${chalk.bold.whiteBright("main.ts")}
 ├── 📂 ${chalk.bold.whiteBright("test")}

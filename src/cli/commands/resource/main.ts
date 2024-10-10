@@ -3,25 +3,28 @@ import { isProjectStructureValid } from "./commands";
 import { projectArchitecture } from "../../templates/resource/project-architecture";
 import * as fs from "fs";
 import { join } from "path";
-import { entity } from "../../templates/resource/entity";
+import { entity } from "../../templates/resource/template.entity";
 import {
   createDTO,
   paginationDTO,
   updateDTO,
 } from "../../templates/resource/dtos";
-import { controller } from "../../templates/resource/controller";
-import { application } from "../../templates/resource/application";
-import { domain } from "../../templates/resource/domain";
-import { appModule } from "../../templates/resource/module";
+import { controller } from "../../templates/resource/template-controller";
+import { application } from "../../templates/resource/template-service";
+import { infrastructure } from "../../templates/resource/template.repository.impl";
+import { appModule } from "../../templates/resource/template-module";
+import { model } from "src/cli/templates/resource/template.model";
+import { domain } from "src/cli/templates/resource/template.repository";
 
 const spinner = ora();
 export const runResourceCommand = (path: string, resource: string) => {
   spinner.start("Comprobando arquitectura...");
   isProjectStructureValid(path).then((valid: boolean) => {
-    if (!valid)
+    if (!valid) {
       return spinner.fail(
         `Arquitectura del proyecto no válida\nLa arquitectura del proyecto debe ser:\n${projectArchitecture}`
       );
+    }
     spinner.succeed();
 
     spinner.start("Creando recursos...");
@@ -47,9 +50,14 @@ export const runResourceCommand = (path: string, resource: string) => {
         filename: `${filename}.service.ts`,
         data: application(entityName, filename, variable),
       },
+      infrastructure: {
+        path: join(join(srcPath, "infrastructure", filename)),
+        filename: `${filename}.repository.impl.ts`,
+        data: infrastructure(entityName, filename, variable),
+      },
       domain: {
         path: join(join(srcPath, "domain", filename)),
-        filename: `${filename}.domain.ts`,
+        filename: `${filename}.repository.ts`,
         data: domain(entityName, filename, variable),
       },
       // constants: {
@@ -58,24 +66,29 @@ export const runResourceCommand = (path: string, resource: string) => {
       //   data: constants(entityName, filename),
       // },
       createDto: {
-        path: join(join(srcPath, "api", filename, "dto")),
+        path: join(join(srcPath, "application", filename, "dto")),
         filename: `create-${filename}.dto.ts`,
         data: createDTO(entityName),
       },
       updateDto: {
-        path: join(join(srcPath, "api", filename, "dto")),
+        path: join(join(srcPath, "application", filename, "dto")),
         filename: `update-${filename}.dto.ts`,
-        data: updateDTO(entityName),
+        data: updateDTO(entityName, filename),
       },
       paginationDto: {
-        path: join(join(srcPath, "api", filename, "dto")),
+        path: join(join(srcPath, "application", filename, "dto")),
         filename: `${filename}-pagination-options.dto.ts`,
         data: paginationDTO(entityName, filename),
       },
+      models: {
+        path: join(join(srcPath, "domain", filename, "models")),
+        filename: `${filename}.model.ts`,
+        data: model(entityName, filename),
+      },
       entities: {
-        path: join(join(srcPath, "domain", filename, "entities")),
+        path: join(join(srcPath, "infrastructure", filename, "entities")),
         filename: `${filename}.entity.ts`,
-        data: entity(entityName, filename),
+        data: entity(entityName),
       },
     };
     const values = Object.values(folders);

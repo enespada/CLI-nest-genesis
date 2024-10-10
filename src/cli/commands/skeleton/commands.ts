@@ -35,6 +35,7 @@ export const isProjectStructureValid = async (
 };
 
 export const clone = (path: string) => {
+  console.log("--------------------------------");
   return shell
     .cd(path)
     .exec(

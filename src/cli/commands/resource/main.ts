@@ -13,8 +13,8 @@ import { controller } from "../../templates/resource/template-controller";
 import { application } from "../../templates/resource/template-service";
 import { infrastructure } from "../../templates/resource/template.repository.impl";
 import { appModule } from "../../templates/resource/template-module";
-import { model } from "src/cli/templates/resource/template.model";
-import { domain } from "src/cli/templates/resource/template.repository";
+import { domain } from "../../templates/resource/template.repository";
+import { model } from "../../templates/resource/template-model";
 
 const spinner = ora();
 export const runResourceCommand = (path: string, resource: string) => {
@@ -32,6 +32,8 @@ export const runResourceCommand = (path: string, resource: string) => {
     const entityName = toCamelCase(resource, true);
     const variable = toCamelCase(resource);
     const filename = resource.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+
+    console.log("---------------------------------");
 
     const srcPath = `${path}/src`;
     const folders = {

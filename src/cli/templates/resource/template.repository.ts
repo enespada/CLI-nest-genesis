@@ -1,23 +1,23 @@
 export const domain = (
-  capitalized: string,
-  lowercased: string,
-  variable: string
-) => `import { Create${capitalized}PayloadDTO } from '@application/${lowercased}/dto/create-${lowercased}-payload.dto';
-import { Update${capitalized}PayloadDTO } from '@application/${lowercased}/dto/update-${lowercased}-payload.dto';
-import { ${capitalized}PageOptionsDTO } from '@application/${lowercased}/dto/${lowercased}-pagination-options.dto';
-import { ${capitalized} } from './models/${lowercased}.model';
+  upperCamelCase: string,
+  lowerCamelCase: string,
+  fileName: string
+) => `import { Create${upperCamelCase}PayloadDTO } from '@application/${fileName}/dto/create-${fileName}-payload.dto';
+import { Update${upperCamelCase}PayloadDTO } from '@application/${fileName}/dto/update-${fileName}-payload.dto';
+import { ${upperCamelCase}PageOptionsDTO } from '@application/${fileName}/dto/${fileName}-pagination-options.dto';
+import { ${upperCamelCase} } from './models/${fileName}.model';
 import {
   FindManyOptions,
   FindOneOptions,
 } from '../shared/interfaces/find-options.interface';
 
-export interface ${capitalized}Repository {
-  async create(create${capitalized}PayloadDto: Create${capitalized}PayloadDTO): Promise<${capitalized}>;
-  async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDTO): Promise<any>;
-  async find(options: FindManyOptions<${capitalized}>): Promise<${capitalized}[]>;
-  async findOne(options: FindOneOptions<${capitalized}>): Promise<${capitalized}>;
-  async findById(id: string): Promise<${capitalized}>;
-  async update(update${capitalized}PayloadDto: Update${capitalized}PayloadDTO): Promise<${capitalized}>;
+export interface ${upperCamelCase}Repository {
+  async create(create${upperCamelCase}PayloadDto: Create${upperCamelCase}PayloadDTO): Promise<${upperCamelCase}>;
+  async paginate(${lowerCamelCase}PageOptionsDto: ${upperCamelCase}PageOptionsDTO): Promise<any>;
+  async find(options: FindManyOptions<${upperCamelCase}>): Promise<${upperCamelCase}[]>;
+  async findOne(options: FindOneOptions<${upperCamelCase}>): Promise<${upperCamelCase}>;
+  async findById(id: string): Promise<${upperCamelCase}>;
+  async update(update${upperCamelCase}PayloadDto: Update${upperCamelCase}PayloadDTO): Promise<${upperCamelCase}>;
   async remove(id: string): Promise<void>;
 }
 `;

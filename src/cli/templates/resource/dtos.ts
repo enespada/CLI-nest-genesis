@@ -1,18 +1,18 @@
-export const createDTO = (capitalized: string) =>
-  `export class Create${capitalized}DTO {}`;
+export const createDTO = (upperCamelCase: string) =>
+  `export class Create${upperCamelCase}DTO {}`;
 
-export const createPayloadDTO = (capitalized: string) =>
-  `export class Create${capitalized}PayloadDTO {}`;
+export const createPayloadDTO = (upperCamelCase: string) =>
+  `export class Create${upperCamelCase}PayloadDTO {}`;
 
 export const updateDTO = (
-  capitalized: string,
-  lowercased: string
+  upperCamelCase: string,
+  fileName: string
 ) => `import { ApiProperty } from '@nestjs/swagger';
 import { IsUUID } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
-import { Create${capitalized}DTO } from './create-${lowercased}.dto';
+import { Create${upperCamelCase}DTO } from './create-${fileName}.dto';
 
-export class Update${capitalized}DTO extends PartialType(Create${capitalized}DTO) {
+export class Update${upperCamelCase}DTO extends PartialType(Create${upperCamelCase}DTO) {
   @ApiProperty({ description: 'Idenfitier of the entity to update'})
   @IsUUID()
   id: string;
@@ -20,11 +20,11 @@ export class Update${capitalized}DTO extends PartialType(Create${capitalized}DTO
 `;
 
 export const updatePayloadDTO = (
-  capitalized: string
+  upperCamelCase: string
 ) => `import { ApiProperty } from '@nestjs/swagger';
 import { IsUUID } from 'class-validator';
 
-export class Update${capitalized}PayloadDTO {
+export class Update${upperCamelCase}PayloadDTO {
   @ApiProperty({ description: 'Idenfitier of the entity to update'})
   @IsUUID()
   id: string;
@@ -32,37 +32,37 @@ export class Update${capitalized}PayloadDTO {
 `;
 
 export const paginationDTO = (
-  capitalized: string,
-  lowercased: string
+  upperCamelCase: string,
+  fileName: string
 ) => `import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsOptional } from 'class-validator';
 import {
-  ${capitalized}OrderBy,
-  ${capitalized}Relations,
-} from '@infrastructure/${lowercased}/entities/${lowercased}.entity';
+  ${upperCamelCase}OrderBy,
+  ${upperCamelCase}Relations,
+} from '@infrastructure/${fileName}/entities/${fileName}.entity';
 import { PageOptionsDTO } from '@core/database/dto/pagination-options.dto';
-import { ${capitalized} } from '@domain/${lowercased}/models/${lowercased}.model';
+import { ${upperCamelCase} } from '@domain/${fileName}/models/${fileName}.model';
 
-export class ${capitalized}PageOptionsDTO extends PageOptionsDTO {
-  @ApiProperty({ enum: ${capitalized}OrderBy, default: ${capitalized}OrderBy.id, required: false })
-  @IsEnum(${capitalized}OrderBy)
+export class ${upperCamelCase}PageOptionsDTO extends PageOptionsDTO {
+  @ApiProperty({ enum: ${upperCamelCase}OrderBy, default: ${upperCamelCase}OrderBy.id, required: false })
+  @IsEnum(${upperCamelCase}OrderBy)
   @IsOptional()
-  readonly orderBy?: ${capitalized}OrderBy = ${capitalized}OrderBy.id;
+  readonly orderBy?: ${upperCamelCase}OrderBy = ${upperCamelCase}OrderBy.id;
 
   @ApiProperty({
     required: false,
     isArray: true,
-    enum: ${capitalized}Relations,
+    enum: ${upperCamelCase}Relations,
     default: [],
   })
-  @IsEnum(${capitalized}Relations, { each: true })
+  @IsEnum(${upperCamelCase}Relations, { each: true })
   @IsOptional()
   @Transform((data) => (Array.isArray(data.value) ? data.value : [data.value]))
-  readonly relations?: Array<${capitalized}Relations> = [];
+  readonly relations?: Array<${upperCamelCase}Relations> = [];
 
   @ApiProperty({ required: false })
   @IsOptional()
-  where?: Partial<${capitalized}>;
+  where?: Partial<${upperCamelCase}>;
 }
 `;

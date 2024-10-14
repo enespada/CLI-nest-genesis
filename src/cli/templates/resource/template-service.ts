@@ -1,61 +1,61 @@
 export const application = (
-  capitalized: string,
-  lowercased: string,
-  variable: string
-) => `import { Create${capitalized}DTO } from '@application/${lowercased}/dto/create-${lowercased}.dto';
-import { Update${capitalized}DTO } from '@application/${lowercased}/dto/update-${lowercased}.dto';
-import { ${capitalized} } from '@domain/${lowercased}/models/${lowercased}.model';
-import { ${capitalized}Repository } from '@domain/${lowercased}/${lowercased}.repository';
+  upperCamelCase: string,
+  lowerCamelCase: string,
+  fileName: string
+) => `import { Create${upperCamelCase}DTO } from '@application/${fileName}/dto/create-${fileName}.dto';
+import { Update${upperCamelCase}DTO } from '@application/${fileName}/dto/update-${fileName}.dto';
+import { ${upperCamelCase} } from '@domain/${fileName}/models/${fileName}.model';
+import { ${upperCamelCase}Repository } from '@domain/${fileName}/${fileName}.repository';
 import { Injectable } from '@nestjs/common';
 import { PageDTO } from '@core/database/dto/page.dto';
 import { PageMetaDTO } from '@core/database/dto/pagination-meta.dto';
-import { ${capitalized}PageOptionsDTO } from '@application/${lowercased}/dto/${lowercased}-pagination-options.dto';
+import { ${upperCamelCase}PageOptionsDTO } from '@application/${fileName}/dto/${fileName}-pagination-options.dto';
 import { FindManyOptions, FindOneOptions } from '@domain/shared/interfaces/find-options.interface';
 
 @Injectable()
-export class ${capitalized}Service {
+export class ${upperCamelCase}Service {
   constructor(
-    @Inject('${capitalized}Repository')
-    private ${variable}Repository: ${capitalized}Repository
+    @Inject('${upperCamelCase}Repository')
+    private ${lowerCamelCase}Repository: ${upperCamelCase}Repository
   ) {}
 
-  async create(create${capitalized}Dto: Create${capitalized}DTO): Promise<${capitalized}> {
-    return await this.${variable}Repository.create(create${capitalized}Dto);
+  async create(create${upperCamelCase}Dto: Create${upperCamelCase}DTO): Promise<${upperCamelCase}> {
+    return await this.${lowerCamelCase}Repository.create(create${upperCamelCase}Dto);
   }
 
-  async find(options?: FindManyOptions<${capitalized}>): Promise<${capitalized}[]> {
-    return await this.${variable}Repository.find(options ?? {});
+  async find(options?: FindManyOptions<${upperCamelCase}>): Promise<${upperCamelCase}[]> {
+    return await this.${lowerCamelCase}Repository.find(options ?? {});
   }
 
-  async findOne(options?: FindOneOptions<${capitalized}>): Promise<${capitalized}> {
-    return await this.${variable}Repository.findOne(options ?? {});
+  async findOne(options?: FindOneOptions<${upperCamelCase}>): Promise<${upperCamelCase}> {
+    return await this.${lowerCamelCase}Repository.findOne(options ?? {});
   }
 
-  async findById(id: string): Promise<${capitalized}> {
-    return await this.${variable}Repository.findById(id);
+  async findById(id: string): Promise<${upperCamelCase}> {
+    return await this.${lowerCamelCase}Repository.findById(id);
   }
 
-  async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDTO): Promise<any> {
+  async paginate(${lowerCamelCase}PageOptionsDto: ${upperCamelCase}PageOptionsDTO): Promise<any> {
     const { totalItems, entities } =
-      await this.${variable}Repository.paginate(${variable}PageOptionsDto);
+      await this.${lowerCamelCase}Repository.paginate(${lowerCamelCase}PageOptionsDto);
     const pageMetaDto = new PageMetaDTO({
       totalItems,
-      pageOptionsDto: ${variable}PageOptionsDto 
+      pageOptionsDto: ${lowerCamelCase}PageOptionsDto 
     });
     return new PageDTO(entities, pageMetaDto);
   }
 
-  async update(update${capitalized}Dto: Update${capitalized}DTO): Promise<${capitalized}> {
+  async update(update${upperCamelCase}Dto: Update${upperCamelCase}DTO): Promise<${upperCamelCase}> {
     // We search the user to check if it exists
-    await this.${variable}Repository.findById(${variable}Id);
-    const update${capitalized}PayloadDto: Partial<Update${capitalized}PayloadDTO> = {
-      ...update${capitalized}Dto,
+    await this.${lowerCamelCase}Repository.findById(${lowerCamelCase}Id);
+    const update${upperCamelCase}PayloadDto: Partial<Update${upperCamelCase}PayloadDTO> = {
+      ...update${upperCamelCase}Dto,
     };
-    return await this.${variable}Repository.update(update${capitalized}PayloadDto);
+    return await this.${lowerCamelCase}Repository.update(update${upperCamelCase}PayloadDto);
   }
 
   async remove(id: string): Promise<void> {
-    return await this.${variable}Repository.remove(id);
+    return await this.${lowerCamelCase}Repository.remove(id);
   }
 }
 `;

@@ -8,8 +8,7 @@ import {
 } from '@core/database/entity/abstract.entity';
 
 @Entity()
-export class ${capitalized}Entity extends AbstractEntity {
-}
+export class ${capitalized}Entity extends AbstractEntity {}
 
 export const default${capitalized}Values: Array<${capitalized}Entity> = [];
 

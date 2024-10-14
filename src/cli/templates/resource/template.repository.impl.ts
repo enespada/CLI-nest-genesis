@@ -1,8 +1,8 @@
 export const infrastructure = (
-  capitalized: string,
-  lowercased: string,
-  variable: string
-) => `import { Injectable } from '@nestjs/common';
+  upperCamelCase: string,
+  lowerCamelCase: string,
+  fileName: string
+) => `import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
@@ -10,38 +10,38 @@ import {
   combineObjectsArray,
   nestDottedObject,
 } from '@core/utils/utils';
-import { ${capitalized} } from '@domain/${capitalized}/models/${capitalized}.model';
-import { ${capitalized}Repository } from '@domain/${capitalized}/${capitalized}.repository';
-import { Create${capitalized}PayloadDTO } from '@application/${lowercased}/dto/create-${lowercased}-payload.dto';
-import { Update${capitalized}PayloadDTO } from '@application/${lowercased}/dto/update-${lowercased}-payload.dto';
-import { ${capitalized}PageOptionsDTO } from '@application/${lowercased}/dto/${lowercased}-pagination-options.dto';
-import { ${capitalized}Entity, ${capitalized}Where } from '.entities/${lowercased}.entity';
+import { ${upperCamelCase} } from '@domain/${upperCamelCase}/models/${upperCamelCase}.model';
+import { ${upperCamelCase}Repository } from '@domain/${upperCamelCase}/${upperCamelCase}.repository';
+import { Create${upperCamelCase}PayloadDTO } from '@application/${fileName}/dto/create-${fileName}-payload.dto';
+import { Update${upperCamelCase}PayloadDTO } from '@application/${fileName}/dto/update-${fileName}-payload.dto';
+import { ${upperCamelCase}PageOptionsDTO } from '@application/${fileName}/dto/${fileName}-pagination-options.dto';
+import { ${upperCamelCase}Entity, ${upperCamelCase}Where } from './entities/${fileName}.entity';
 import {
   FindManyOptions,
   FindOneOptions,
 } from '@domain/shared/interfaces/find-options.interface';
 import { FindOptionsMapper } from '@infrastructure/shared/mappers/find-options.mapper';
-import { ${capitalized}Mapper } from './mappers/${lowercased}.mapper';
+import { ${upperCamelCase}Mapper } from './mappers/${fileName}.mapper';
 
 
 @Injectable()
-export class ${capitalized}RepositoryImpl implements ${capitalized}Repository {
+export class ${upperCamelCase}RepositoryImpl implements ${upperCamelCase}Repository {
   constructor(
-    @InjectRepository(${capitalized}Entity)
-    private readonly ${variable}Repository: Repository<${capitalized}Entity>,
+    @InjectRepository(${upperCamelCase}Entity)
+    private readonly ${lowerCamelCase}Repository: Repository<${upperCamelCase}Entity>,
   ) {}
 
-  async create(create${capitalized}PayloadDto: Create${capitalized}PayloadDTO): Promise<${capitalized}> {
-    const ${variable} = this.${variable}Repository.create(create${capitalized}PayloadDto);
-    await this.${variable}Repository.save(${variable});
+  async create(create${upperCamelCase}PayloadDto: Create${upperCamelCase}PayloadDTO): Promise<${upperCamelCase}> {
+    const ${lowerCamelCase} = this.${lowerCamelCase}Repository.create(create${upperCamelCase}PayloadDto);
+    await this.${lowerCamelCase}Repository.save(${lowerCamelCase});
     return await this.findById(user.id);
   }
 
-  async paginate(${variable}PageOptionsDto: ${capitalized}PageOptionsDTO): Promise<any> {
-    const where = ${variable}PageOptionsDto.where
+  async paginate(${lowerCamelCase}PageOptionsDto: ${upperCamelCase}PageOptionsDTO): Promise<any> {
+    const where = ${lowerCamelCase}PageOptionsDto.where
       ? combineObjectsArray(
-          Object.entries(${variable}PageOptionsDto.where).map(([k, v]) => {
-            const relationTrace: string = ${capitalized}Where[k];
+          Object.entries(${lowerCamelCase}PageOptionsDto.where).map(([k, v]) => {
+            const relationTrace: string = ${upperCamelCase}Where[k];
             const obj = { [relationTrace]: changeToLike(v) };
 
             return nestDottedObject(obj);
@@ -50,58 +50,58 @@ export class ${capitalized}RepositoryImpl implements ${capitalized}Repository {
       : {};
 
     const [totalItems, entities] = await Promise.all([
-      this.${variable}Repository.count(),
-      this.${variable}Repository.find({
+      this.${lowerCamelCase}Repository.count(),
+      this.${lowerCamelCase}Repository.find({
         order: {
-          [${variable}PageOptionsDto.orderBy]: ${variable}PageOptionsDto.order,
+          [${lowerCamelCase}PageOptionsDto.orderBy]: ${lowerCamelCase}PageOptionsDto.order,
         },
         where: where,
-        skip: ${variable}PageOptionsDto.skip,
-        take: ${variable}PageOptionsDto.take,
-        relations: ${variable}PageOptionsDto.relations as unknown as Array<string>,
+        skip: ${lowerCamelCase}PageOptionsDto.skip,
+        take: ${lowerCamelCase}PageOptionsDto.take,
+        relations: ${lowerCamelCase}PageOptionsDto.relations as unknown as Array<string>,
       }),
     ]);
     
     return { totalItems, entities };
   }
 
-  async find(options: FindManyOptions<${capitalized}>): Promise<${capitalized}[]> {
+  async find(options: FindManyOptions<${upperCamelCase}>): Promise<${upperCamelCase}[]> {
     const typeOrmOptions =
       FindOptionsMapper.mapFindManyOptionsToTypeOrmOptions(options);
-    const ${variable}Entities: ${capitalized}Entity[] =
-      await this.${variable}Repository.find(typeOrmOptions);
-    return ${variable}Entities.map((e: ${capitalized}Entity) => ${capitalized}Mapper.entityToModel(e));
+    const ${lowerCamelCase}Entities: ${upperCamelCase}Entity[] =
+      await this.${lowerCamelCase}Repository.find(typeOrmOptions);
+    return ${lowerCamelCase}Entities.map((e: ${upperCamelCase}Entity) => ${upperCamelCase}Mapper.entityToModel(e));
   }
 
-  async findOne(options: FindOneOptions<${capitalized}>): Promise<${capitalized}>  {
+  async findOne(options: FindOneOptions<${upperCamelCase}>): Promise<${upperCamelCase}>  {
     const typeOrmOptions =
       FindOptionsMapper.mapFindOneOptionsToTypeOrmOptions(options);
-    const ${variable}Entity: ${capitalized}Entity =
-      await this.${variable}Repository.findOne(typeOrmOptions);
-    if (!${variable}Entity) {
-      throw new BadRequestException('${capitalized} not found');
+    const ${lowerCamelCase}Entity: ${upperCamelCase}Entity =
+      await this.${lowerCamelCase}Repository.findOne(typeOrmOptions);
+    if (!${lowerCamelCase}Entity) {
+      throw new BadRequestException('${upperCamelCase} not found');
     }
-    return ${capitalized}Mapper.entityToModel(${variable}Entity);
+    return ${upperCamelCase}Mapper.entityToModel(${lowerCamelCase}Entity);
   }
 
-  async findById(id: string): Promise<${capitalized}> {
-    const ${variable}Entity: ${capitalized}Entity = await this.${variable}Repository.findOne({
+  async findById(id: string): Promise<${upperCamelCase}> {
+    const ${lowerCamelCase}Entity: ${upperCamelCase}Entity = await this.${lowerCamelCase}Repository.findOne({
       where: { id },
     });
-    if (!${variable}Entity) {
-      throw new BadRequestException('${capitalized} not found');
+    if (!${lowerCamelCase}Entity) {
+      throw new BadRequestException('${upperCamelCase} not found');
     }
-    return ${capitalized}Mapper.entityToModel(${variable}Entity);
+    return ${upperCamelCase}Mapper.entityToModel(${lowerCamelCase}Entity);
   }
 
-  async update(update${capitalized}PayloadDto: Update${capitalized}PayloadDTO): Promise<${capitalized}> {
-   const {id, ...rest} = update${capitalized}PayloadDto;
-    await this.${variable}Repository.update(id, rest);
+  async update(update${upperCamelCase}PayloadDto: Update${upperCamelCase}PayloadDTO): Promise<${upperCamelCase}> {
+   const {id, ...rest} = update${upperCamelCase}PayloadDto;
+    await this.${lowerCamelCase}Repository.update(id, rest);
     return await this.findById(id);
   }
 
   async remove(id: string): Promise<void>  {
-    return await this.${variable}Repository.delete(id);
+    return await this.${lowerCamelCase}Repository.delete(id);
   }
 }
 `;

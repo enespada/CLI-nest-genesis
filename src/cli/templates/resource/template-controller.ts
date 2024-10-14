@@ -1,8 +1,8 @@
 export const controller = (
-  capitalized: string,
-  fileName: string,
-  lowerCased: string
-) => `import { ${capitalized}Service } from '@application/${fileName}/${fileName}.service';
+  upperCamelCase: string,
+  lowerCamelCase: string,
+  fileName: string
+) => `import { ${upperCamelCase}Service } from '@application/${fileName}/${fileName}.service';
 import { ExceptionFilter } from '@core/exceptions/global.exception';
 import {
   Body,
@@ -33,41 +33,41 @@ import {
   ApiUnauthorizedResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { Create${capitalized}DTO } from '../../application/${fileName}/dto/create-${fileName}.dto';
-import { Update${capitalized}DTO } from '../../application/${fileName}/dto/update-${fileName}.dto';
-import { ${capitalized} } from '@domain/${fileName}/models/${fileName}.model';
-import { ${capitalized}PageOptionsDTO } from '../../application/${fileName}/dto/${fileName}-pagination-options.dto';
+import { Create${upperCamelCase}DTO } from '../../application/${fileName}/dto/create-${fileName}.dto';
+import { Update${upperCamelCase}DTO } from '../../application/${fileName}/dto/update-${fileName}.dto';
+import { ${upperCamelCase} } from '@domain/${fileName}/models/${fileName}.model';
+import { ${upperCamelCase}PageOptionsDTO } from '../../application/${fileName}/dto/${fileName}-pagination-options.dto';
 
 @Controller('${fileName}')
-@ApiTags('${capitalized}')
+@ApiTags('${upperCamelCase}')
 @UseFilters(ExceptionFilter)
 @UseGuards(JwtUserGuard)
 // @UseInterceptors(TransformInterceptor)
 @ApiUnauthorizedResponse({
   description: 'Bearer token must be a valid Token',
 })
-export class ${capitalized}Controller {
-  constructor(private readonly ${lowerCased}Service: ${capitalized}Service) {}
+export class ${upperCamelCase}Controller {
+  constructor(private readonly ${lowerCamelCase}Service: ${upperCamelCase}Service) {}
 
   //-----------------------------------------------POST-----------------------------------------------------------
   @Post()
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Saves a ${capitalized}' })
-  @ApiBody({ type: Create${capitalized}DTO })
+  @ApiOperation({ summary: 'Saves a ${upperCamelCase}' })
+  @ApiBody({ type: Create${upperCamelCase}DTO })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
     description: 'The request sent to the server is invalid or corrupted',
   })
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: ${capitalized},
-    description: 'Retrieves a saved ${capitalized}',
+    type: ${upperCamelCase},
+    description: 'Retrieves a saved ${upperCamelCase}',
   })
   save(
     @Body()
-    create${capitalized}Dto: Create${capitalized}DTO,
+    create${upperCamelCase}Dto: Create${upperCamelCase}DTO,
   ) {
-    return this.${lowerCased}Service.create(create${capitalized}Dto);
+    return this.${lowerCamelCase}Service.create(create${upperCamelCase}Dto);
   }
 
   //-----------------------------------------------GET-----------------------------------------------------------
@@ -75,18 +75,18 @@ export class ${capitalized}Controller {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Gets all ${fileName}' })
   @ApiOkResponse({
-    type: Array<${capitalized}>,
+    type: Array<${upperCamelCase}>,
     isArray: true,
-    description: 'Retrieves an array of ${fileName}',
+    description: 'Retrieves an array of ${upperCamelCase}',
   })
   getAll() {
-    return this.${lowerCased}Service.find();
+    return this.${lowerCamelCase}Service.find();
   }
   
   //-----------------------------------------------GET paginate-----------------------------------------------------------
   @Get('paginate')
-  @ApiOperation({ summary: 'Paginate ${fileName}' })
-  @ApiExtraModels(${capitalized})
+  @ApiOperation({ summary: 'Paginate list of ${upperCamelCase}' })
+  @ApiExtraModels(${upperCamelCase})
   @ApiQuery({
     required: false,
     name: 'where',
@@ -94,16 +94,16 @@ export class ${capitalized}Controller {
     explode: true,
     type: 'object',
     schema: {
-      $ref: getSchemaPath(${capitalized}),
+      $ref: getSchemaPath(${upperCamelCase}),
     },
   })
   @ApiOkResponse({
-    type: Array<${capitalized}>,
+    type: Array<${upperCamelCase}>,
     isArray: true,
-    description: 'Retrieves an array of ${capitalized}',
+    description: 'Retrieves an array of ${upperCamelCase}',
   })
-  paginate(@Query() ${fileName}PageOptionsDto: ${capitalized}PageOptionsDTO) {
-    return this.${lowerCased}Service.paginate(${fileName}PageOptionsDto);
+  paginate(@Query() ${lowerCamelCase}PageOptionsDto: ${upperCamelCase}PageOptionsDTO) {
+    return this.${lowerCamelCase}Service.paginate(${lowerCamelCase}PageOptionsDto);
   }
 
   //-----------------------------------------------GET :id-----------------------------------------------------------
@@ -112,29 +112,29 @@ export class ${capitalized}Controller {
   @ApiParam({
     name: 'id',
     type: String,
-    description: 'Unique identifier of the ${fileName}',
+    description: 'Unique identifier of the ${upperCamelCase}',
   })
-  @ApiOperation({ summary: 'Gets a ${fileName} by given id' })
+  @ApiOperation({ summary: 'Gets a ${upperCamelCase} by given id' })
   @ApiOkResponse({
-    type: ${capitalized},
-    description: 'Retrieves ${fileName} data',
+    type: ${upperCamelCase},
+    description: 'Retrieves ${upperCamelCase} data',
   })
   @ApiResponse({
-    description: 'There is no ${fileName} with the given id',
+    description: 'There is no ${upperCamelCase} with the given id',
     status: HttpStatus.NOT_FOUND,
   })
   get(@Param('id', ParseUUIDPipe) id: string) {
-    return this.${lowerCased}Service.findById(id);
+    return this.${lowerCamelCase}Service.findById(id);
   }
 
   //-----------------------------------------------PUT-----------------------------------------------------------
   @Put()
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Updates a ${fileName}' })
-  @ApiBody({ type: Update${capitalized}DTO })
+  @ApiOperation({ summary: 'Updates a ${upperCamelCase}' })
+  @ApiBody({ type: Update${upperCamelCase}DTO })
   @ApiOkResponse({
-    type: ${capitalized},
-    description: 'Retrieves an updated ${fileName}',
+    type: ${upperCamelCase},
+    description: 'Retrieves an updated ${upperCamelCase}',
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -142,9 +142,9 @@ export class ${capitalized}Controller {
   })
   update(
     @Body()
-    update${capitalized}Dto: Update${capitalized}DTO,
+    update${upperCamelCase}Dto: Update${upperCamelCase}DTO,
   ) {
-    return this.${lowerCased}Service.update(update${capitalized}Dto);
+    return this.${lowerCamelCase}Service.update(update${upperCamelCase}Dto);
   }
 
   //-----------------------------------------------DELETE :id-----------------------------------------------------------
@@ -159,10 +159,10 @@ export class ${capitalized}Controller {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: '${capitalized} successfully deleted',
+    description: '${upperCamelCase} successfully deleted',
   })
   delete(@Param('id', ParseUUIDPipe) id: string) {
-    return this.${lowerCased}Service.remove(id);
+    return this.${lowerCamelCase}Service.remove(id);
   }
 }
 `;

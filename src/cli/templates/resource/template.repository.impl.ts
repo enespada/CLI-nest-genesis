@@ -10,8 +10,8 @@ import {
   combineObjectsArray,
   nestDottedObject,
 } from '@core/utils/utils';
-import { ${upperCamelCase} } from '@domain/${upperCamelCase}/models/${upperCamelCase}.model';
-import { ${upperCamelCase}Repository } from '@domain/${upperCamelCase}/${upperCamelCase}.repository';
+import { ${upperCamelCase} } from '@domain/${fileName}/models/${fileName}.model';
+import { ${upperCamelCase}Repository } from '@domain/${fileName}${fileName}.repository';
 import { Create${upperCamelCase}PayloadDTO } from '@application/${fileName}/dto/create-${fileName}-payload.dto';
 import { Update${upperCamelCase}PayloadDTO } from '@application/${fileName}/dto/update-${fileName}-payload.dto';
 import { ${upperCamelCase}PageOptionsDTO } from '@application/${fileName}/dto/${fileName}-pagination-options.dto';
@@ -33,8 +33,8 @@ export class ${upperCamelCase}RepositoryImpl implements ${upperCamelCase}Reposit
 
   async create(create${upperCamelCase}PayloadDto: Create${upperCamelCase}PayloadDTO): Promise<${upperCamelCase}> {
     const ${lowerCamelCase} = this.${lowerCamelCase}Repository.create(create${upperCamelCase}PayloadDto);
-    await this.${lowerCamelCase}Repository.save(${lowerCamelCase});
-    return await this.findById(user.id);
+    const created${upperCamelCase}: ${upperCamelCase}Entity = await this.${lowerCamelCase}Repository.save(${lowerCamelCase});
+    return await this.findById(created${upperCamelCase}.id);
   }
 
   async paginate(${lowerCamelCase}PageOptionsDto: ${upperCamelCase}PageOptionsDTO): Promise<any> {
@@ -101,7 +101,7 @@ export class ${upperCamelCase}RepositoryImpl implements ${upperCamelCase}Reposit
   }
 
   async remove(id: string): Promise<void>  {
-    return await this.${lowerCamelCase}Repository.delete(id);
+    await this.${lowerCamelCase}Repository.delete(id);
   }
 }
 `;

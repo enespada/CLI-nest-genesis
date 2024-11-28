@@ -18,6 +18,7 @@ import { SessionModule } from '@core/services/session/session.module';
   ],
   controllers: [${capitalized}Controller],
   providers: [
+    ${capitalized}Service,
     { provide: '${capitalized}Repository', useClass: ${capitalized}RepositoryImpl },
   ],
   exports: [${capitalized}Service, '${capitalized}Repository'],

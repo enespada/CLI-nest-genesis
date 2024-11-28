@@ -6,11 +6,13 @@ export const application = (
 import { Update${upperCamelCase}DTO } from '@application/${fileName}/dto/update-${fileName}.dto';
 import { ${upperCamelCase} } from '@domain/${fileName}/models/${fileName}.model';
 import { ${upperCamelCase}Repository } from '@domain/${fileName}/${fileName}.repository';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PageDTO } from '@core/database/dto/page.dto';
 import { PageMetaDTO } from '@core/database/dto/pagination-meta.dto';
 import { ${upperCamelCase}PageOptionsDTO } from '@application/${fileName}/dto/${fileName}-pagination-options.dto';
 import { FindManyOptions, FindOneOptions } from '@domain/shared/interfaces/find-options.interface';
+import { Update${upperCamelCase}PayloadDTO } from './dto/update-${fileName}-payload.dto';
+
 
 @Injectable()
 export class ${upperCamelCase}Service {
@@ -47,11 +49,11 @@ export class ${upperCamelCase}Service {
 
   async update(update${upperCamelCase}Dto: Update${upperCamelCase}DTO): Promise<${upperCamelCase}> {
     // We search the user to check if it exists
-    await this.${lowerCamelCase}Repository.findById(${lowerCamelCase}Id);
+    await this.${lowerCamelCase}Repository.findById(update${upperCamelCase}Dto.id);
     const update${upperCamelCase}PayloadDto: Partial<Update${upperCamelCase}PayloadDTO> = {
       ...update${upperCamelCase}Dto,
     };
-    return await this.${lowerCamelCase}Repository.update(update${upperCamelCase}PayloadDto);
+    return await this.${lowerCamelCase}Repository.update(update${upperCamelCase}PayloadDto as Update${upperCamelCase}PayloadDTO);
   }
 
   async remove(id: string): Promise<void> {

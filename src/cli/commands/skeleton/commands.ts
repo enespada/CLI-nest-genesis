@@ -39,7 +39,7 @@ export const clone = (path: string) => {
   return shell
     .cd(path)
     .exec(
-      `git clone https://github.com/enespada/nest-architecture.git ${path}`,
+      `git clone --branch feature/entity-model-architecture-Enrique https://github.com/enespada/nest-architecture.git ${path}`,
       {
         async: true,
       }

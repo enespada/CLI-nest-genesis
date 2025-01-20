@@ -12,6 +12,7 @@ import { PageMetaDTO } from '@core/database/dto/pagination-meta.dto';
 import { ${upperCamelCase}PageOptionsDTO } from '@application/${fileName}/dto/${fileName}-pagination-options.dto';
 import { FindManyOptions, FindOneOptions } from '@domain/shared/interfaces/find-options.interface';
 import { Update${upperCamelCase}PayloadDTO } from './dto/update-${fileName}-payload.dto';
+import { Create${upperCamelCase}PayloadDTO } from './dto/create-${fileName}-payload.dto';
 
 
 @Injectable()
@@ -22,7 +23,8 @@ export class ${upperCamelCase}Service {
   ) {}
 
   async create(create${upperCamelCase}Dto: Create${upperCamelCase}DTO): Promise<${upperCamelCase}> {
-    return await this.${lowerCamelCase}Repository.create(create${upperCamelCase}Dto);
+    const create${upperCamelCase}PayloadDto: Create${upperCamelCase}PayloadDTO = { ...create${upperCamelCase}Dto };
+    return await this.${lowerCamelCase}Repository.create(create${upperCamelCase}PayloadDto);
   }
 
   async find(options?: FindManyOptions<${upperCamelCase}>): Promise<${upperCamelCase}[]> {

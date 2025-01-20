@@ -12,7 +12,6 @@ export class ${capitalized}Entity extends AbstractEntity {}
 
 export const default${capitalized}Values: Array<${capitalized}Entity> = [];
 
-
 //--------------------------------------------Where-------------------------------------------------------------
 enum ${capitalized}WhereEnum {}
 export type ${capitalized}Where = ${capitalized}WhereEnum | AbstractWhere;

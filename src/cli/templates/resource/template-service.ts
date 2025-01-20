@@ -10,7 +10,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { PageDTO } from '@core/database/dto/page.dto';
 import { PageMetaDTO } from '@core/database/dto/pagination-meta.dto';
 import { ${upperCamelCase}PageOptionsDTO } from '@application/${fileName}/dto/${fileName}-pagination-options.dto';
-import { FindManyOptions, FindOneOptions } from '@domain/shared/interfaces/find-options.interface';
+import {
+  FindManyOptions,
+  FindOneOptions,
+} from '@domain/shared/interfaces/find-options.interface';
 import { Update${upperCamelCase}PayloadDTO } from './dto/update-${fileName}-payload.dto';
 import { Create${upperCamelCase}PayloadDTO } from './dto/create-${fileName}-payload.dto';
 

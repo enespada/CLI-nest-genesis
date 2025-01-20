@@ -11,7 +11,7 @@ import {
   nestDottedObject,
 } from '@core/utils/utils';
 import { ${upperCamelCase} } from '@domain/${fileName}/models/${fileName}.model';
-import { ${upperCamelCase}Repository } from '@domain/${fileName}${fileName}.repository';
+import { ${upperCamelCase}Repository } from '@domain/${fileName}/${fileName}.repository';
 import { Create${upperCamelCase}PayloadDTO } from '@application/${fileName}/dto/create-${fileName}-payload.dto';
 import { Update${upperCamelCase}PayloadDTO } from '@application/${fileName}/dto/update-${fileName}-payload.dto';
 import { ${upperCamelCase}PageOptionsDTO } from '@application/${fileName}/dto/${fileName}-pagination-options.dto';
@@ -22,7 +22,6 @@ import {
 } from '@domain/shared/interfaces/find-options.interface';
 import { FindOptionsMapper } from '@infrastructure/shared/mappers/find-options.mapper';
 import { ${upperCamelCase}Mapper } from './mappers/${fileName}.mapper';
-
 
 @Injectable()
 export class ${upperCamelCase}RepositoryImpl implements ${upperCamelCase}Repository {
